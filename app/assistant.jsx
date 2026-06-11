@@ -1,8 +1,9 @@
 import { useState, useRef } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, FlatList, KeyboardAvoidingView, Platform, useColorScheme, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, FlatList, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors, DarkColors } from '../constants/theme';
+
 import { aiApi } from '../services/api';
+import { useTheme } from './context/ThemeContext';
 
 const SUGGESTIONS = [
   'How do I prepare for NMCN exam?',
@@ -12,9 +13,7 @@ const SUGGESTIONS = [
 ];
 
 export default function AIAssistant() {
-  const scheme = useColorScheme();
-  const isDark = scheme === 'dark';
-  const theme = isDark ? DarkColors : Colors;
+  const { isDark, theme } = useTheme();
 
   const [messages, setMessages] = useState([
     { id: '0', text: "Hello! I'm your Nursphere AI assistant. Ask me anything about nursing, exams, procedures, or your career!", isUser: false },
@@ -51,7 +50,7 @@ export default function AIAssistant() {
           </View>
           <View>
             <Text style={[styles.headerTitle, { color: theme.text }]}>AI Assistant</Text>
-            <Text style={[styles.headerSub, { color: theme.textSecondary }]}>Powered by Gemini</Text>
+            <Text style={[styles.headerSub, { color: theme.textSecondary }]}>Powered by AI</Text>
           </View>
         </View>
       </View>

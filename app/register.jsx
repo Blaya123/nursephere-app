@@ -3,19 +3,17 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingVi
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { auth, setToken, setStoredUser } from '../services/api';
+import { auth } from '../services/api';
 
 export default function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('Nursing Student');
   const [year, setYear] = useState('1');
   const [institution, setInstitution] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const roles = ['BSN Student', 'RN', 'Midwife', 'Nursing Student', 'Other'];
-  const years = ['1', '2', '3', '4', '5', 'Graduate'];
+  const years = ['1', '2', '3', '4'];
 
   async function handleRegister() {
     if (!name || !email || !password) {
@@ -24,12 +22,11 @@ export default function Register() {
     }
     setLoading(true);
     try {
-      const data = await auth.register({ name, email, password, role, year, institution });
-      await setToken(data.token);
-      await setStoredUser(data.user);
-      router.replace('/(tabs)');
+      const data = await auth.sendOTP({ email });
+      const devOtp = data.emailError ? (data.otp || '') : '';
+      router.push({ pathname: '/verify-otp', params: { name, email, password, year, institution, devOtp } });
     } catch (err) {
-      Alert.alert('Registration Failed', err.message);
+      Alert.alert('Error', err.message);
     } finally {
       setLoading(false);
     }
@@ -67,13 +64,15 @@ export default function Register() {
               <TextInput style={styles.input} placeholder="Institution (optional)" placeholderTextColor="rgba(255,255,255,0.4)" value={institution} onChangeText={setInstitution} />
             </View>
 
-            <View style={styles.row}>
-              <View style={[styles.inputContainer, { flex: 1 }]}>
-                <TextInput style={styles.input} value={role} editable={false} />
+            <View style={styles.yearContainer}>
+              <Text style={styles.yearLabel}>Level of Study</Text>
+              <View style={styles.yearRow}>
+                {years.map((y) => (
+                  <TouchableOpacity key={y} style={[styles.yearBtn, year === y && styles.yearBtnActive]} onPress={() => setYear(y)}>
+                    <Text style={[styles.yearBtnText, year === y && styles.yearBtnTextActive]}>Year {y}</Text>
+                  </TouchableOpacity>
+                ))}
               </View>
-              <TouchableOpacity style={styles.pickerButton}>
-                <Text style={styles.pickerText}>Role</Text>
-              </TouchableOpacity>
             </View>
 
             <TouchableOpacity style={[styles.button, loading && { opacity: 0.7 }]} onPress={handleRegister} disabled={loading}>
@@ -99,9 +98,13 @@ const styles = StyleSheet.create({
   form: { gap: 14 },
   inputContainer: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: 'rgba(255,255,255,0.12)', borderRadius: 16, paddingHorizontal: 16, paddingVertical: 14 },
   input: { flex: 1, color: '#fff', fontSize: 16 },
-  row: { flexDirection: 'row', gap: 10 },
-  pickerButton: { backgroundColor: 'rgba(255,255,255,0.15)', borderRadius: 16, paddingHorizontal: 16, justifyContent: 'center' },
-  pickerText: { color: 'rgba(255,255,255,0.7)', fontSize: 14 },
+  yearContainer: { marginTop: 4 },
+  yearLabel: { color: 'rgba(255,255,255,0.7)', fontSize: 13, marginBottom: 8 },
+  yearRow: { flexDirection: 'row', gap: 8 },
+  yearBtn: { flex: 1, backgroundColor: 'rgba(255,255,255,0.12)', borderRadius: 12, paddingVertical: 12, alignItems: 'center' },
+  yearBtnActive: { backgroundColor: '#fff' },
+  yearBtnText: { color: 'rgba(255,255,255,0.7)', fontSize: 13, fontWeight: '600' },
+  yearBtnTextActive: { color: '#008751' },
   button: { backgroundColor: '#fff', paddingVertical: 16, borderRadius: 16, alignItems: 'center', marginTop: 8 },
   buttonText: { color: '#008751', fontSize: 18, fontWeight: '700' },
   link: { color: 'rgba(255,255,255,0.8)', textAlign: 'center', marginTop: 16, fontSize: 14 },

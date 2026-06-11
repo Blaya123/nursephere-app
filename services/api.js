@@ -3,7 +3,7 @@ import { API_BASE } from '../constants/api';
 
 const TOKEN_KEY = 'nursphere_token';
 
-async function getToken() {
+export async function getToken() {
   return AsyncStorage.getItem(TOKEN_KEY);
 }
 
@@ -36,18 +36,30 @@ async function request(endpoint, options = {}) {
     ...options.headers,
   };
 
-  const res = await fetch(`${API_BASE}${endpoint}`, { ...options, headers });
-  const data = await res.json();
+  const url = `${API_BASE}${endpoint}`;
+  const res = await fetch(url, { ...options, headers });
+  const textBody = await res.text();
+
+  let data;
+  try {
+    data = JSON.parse(textBody);
+  } catch {
+    throw new Error(`Server error (${res.status}) at ${url}: ${textBody.substring(0, 150)}`);
+  }
 
   if (!res.ok) {
-    throw new Error(data.error || 'Request failed');
+    throw new Error(`Server error (${res.status}) at ${url}: ${data.error || textBody.substring(0, 100)}`);
   }
   return data;
 }
 
 export const auth = {
+  sendOTP: (body) => request('/api/auth/send-otp', { method: 'POST', body: JSON.stringify(body) }),
   register: (body) => request('/api/auth/register', { method: 'POST', body: JSON.stringify(body) }),
+  resendOTP: (body) => request('/api/auth/resend-otp', { method: 'POST', body: JSON.stringify(body) }),
   login: (body) => request('/api/auth/login', { method: 'POST', body: JSON.stringify(body) }),
+  forgotPassword: (body) => request('/api/auth/forgot-password', { method: 'POST', body: JSON.stringify(body) }),
+  resetPassword: (body) => request('/api/auth/reset-password', { method: 'POST', body: JSON.stringify(body) }),
 };
 
 export const userApi = {

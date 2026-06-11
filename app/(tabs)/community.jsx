@@ -1,15 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, useColorScheme, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors, DarkColors, Channels } from '../../constants/theme';
+import { Channels } from '../../constants/theme';
 import { chatApi, getStoredUser } from '../../services/api';
+import { useTheme } from '../context/ThemeContext';
 
 const REACTIONS = ['👍', '❤️', '🔥', '😂', '🙏', '💪'];
 
 export default function Community() {
-  const scheme = useColorScheme();
-  const isDark = scheme === 'dark';
-  const theme = isDark ? DarkColors : Colors;
+  const { isDark, theme } = useTheme();
 
   const [activeChannel, setActiveChannel] = useState('general');
   const [messages, setMessages] = useState([]);

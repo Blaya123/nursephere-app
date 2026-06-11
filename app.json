@@ -25,8 +25,23 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "newArchEnabled": false,
+            "minSdkVersion": 24
+          }
+        }
+      ]
     ],
+    "updates": {
+      "url": "https://u.expo.dev/a0e73d5b-ff8f-468e-9fe1-962561aaa6eb",
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 0
+    },
     "extra": {
       "router": {},
       "eas": {

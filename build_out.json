@@ -1,0 +1,60 @@
+﻿node.exe : Γÿà eas-cli@20.1.0 is now available.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Γÿà eas-cli@20.1.0 is now available.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+To upgrade, run:
+npm install -g eas-cli
+Proceeding with outdated version.
+
+[
+  {
+    "id": "16f49c53-c646-4b26-a5e4-9001ec9d5306",
+    "status": "FINISHED",
+    "platform": "ANDROID",
+    "artifacts": {
+      "buildUrl": "https://expo.dev/artifacts/eas/4-94rsZZnnkbd5Qw7HoZ4wv0qL779rmiDU4EWh2o0-M.apk",
+      "applicationArchiveUrl": "https://expo.dev/artifacts/eas/4-94rsZZnnkbd5Qw7HoZ4wv0qL779rmiDU4EWh2o0-M.apk"
+    },
+    "fingerprint": {
+      "id": "019eb647-937d-7bba-b52f-f8caccd77393",
+      "hash": "0e04f51028c13a5ee6d6785d93edd2ee088e7b66"
+    },
+    "initiatingActor": {
+      "id": "c325c8c6-243d-4697-ae3e-2d33bb397fe8",
+      "displayName": "blaya123"
+    },
+    "logFiles": [
+      "https://storage.googleapis.com/eas-workflows-production/logs/a0e73d5b-ff8f-468e-9fe1-962561aaa6eb/16f49c53-c646-4b26-a5e4-9001ec9d5306/2026-06-11T11%3A29%3A07Z-410ec35f-eb89-4690-952d-e920b6fd6777.txt?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=www-production%40exponentjs.iam.gserviceaccount.com%2F20260611%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260611T113958Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=8711a3de2dfd8f4a0bdaf3c94447d9fb6c99c4f278566d6607a331331a54a06f67421c03c482a46109b3900a1232b8755bc33b5fe0e3605342316e7766b4bca68b4b805a42a5f6d2851f2c0ce8c069794b1766859cb12df7d8aa741e6103fcea239745019b54a9bacaeb2811c15dc1651b907b82d5affd5c21ddc40e3126b6cb625f29cebcdf7f27ca6bdc88b35d4d2397c4892f2aaa714cb6539916bd12e64c7d42415d2d95642e336420fc04975a75436a1d0d397c23d164d025e26e4c4497db871469c73021f6fd66d1853886f70b4ae2400cc960040a9680ea9122d5bf53452b5cd540fd36f0242ca865545928fe5a937e08f967d8506b657afcf135c1f1"
+    ],
+    "project": {
+      "id": "a0e73d5b-ff8f-468e-9fe1-962561aaa6eb",
+      "name": "nursphere",
+      "slug": "nursphere",
+      "ownerAccount": {
+        "id": "1acae266-45b6-4234-92db-7ccd0f893ba7",
+        "name": "blaya123"
+      }
+    },
+    "distribution": "STORE",
+    "buildProfile": "preview",
+    "sdkVersion": "56.0.0",
+    "appVersion": "1.0.0",
+    "appBuildVersion": "1",
+    "gitCommitHash": "bd054558287897a18eedfadd1c63fd7a5afbc44b",
+    "gitCommitMessage": "Fix react & async-storage versions for build compatibility",
+    "priority": "NORMAL",
+    "createdAt": "2026-06-11T11:17:00.438Z",
+    "updatedAt": "2026-06-11T11:42:18.092Z",
+    "completedAt": "2026-06-11T11:42:17.939Z",
+    "expirationDate": "2026-07-11T11:17:00.472Z",
+    "isForIosSimulator": false,
+    "metrics": {
+      "buildWaitTime": 1773,
+      "buildQueueTime": 729336,
+      "buildDuration": 786392
+    }
+  }
+]

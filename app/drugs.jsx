@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, FlatList, useColorScheme, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors, DarkColors } from '../constants/theme';
+;
 import { drugsApi } from '../services/api';
+import { useTheme } from './context/ThemeContext';
 
 export default function Drugs() {
-  const scheme = useColorScheme();
-  const isDark = scheme === 'dark';
-  const theme = isDark ? DarkColors : Colors;
+  const { isDark, theme } = useTheme();
 
   const [drugs, setDrugs] = useState([]);
   const [search, setSearch] = useState('');

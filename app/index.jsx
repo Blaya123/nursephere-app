@@ -1,7 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import { View, Text, StyleSheet, Animated, Dimensions, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { getStoredUser, getToken } from '../services/api';
 import { Colors } from '../constants/theme';
@@ -14,7 +14,6 @@ export default function Welcome() {
   const pulseAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
-    checkAuth();
     Animated.parallel([
       Animated.timing(fadeAnim, { toValue: 1, duration: 1000, useNativeDriver: true }),
       Animated.timing(slideAnim, { toValue: 0, duration: 800, useNativeDriver: true }),
@@ -27,6 +26,10 @@ export default function Welcome() {
       ])
     ).start();
   }, []);
+
+  useFocusEffect(useCallback(() => {
+    checkAuth();
+  }, []));
 
   async function checkAuth() {
     const token = await getToken();

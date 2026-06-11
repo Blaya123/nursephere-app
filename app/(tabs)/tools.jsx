@@ -1,13 +1,11 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, useColorScheme } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Colors, DarkColors } from '../../constants/theme';
+import { useTheme } from '../context/ThemeContext';
 
 export default function Tools() {
-  const scheme = useColorScheme();
-  const isDark = scheme === 'dark';
-  const theme = isDark ? DarkColors : Colors;
+  const { isDark, theme } = useTheme();
 
   const tools = [
     {
@@ -70,7 +68,7 @@ export default function Tools() {
       <View style={styles.infoSection}>
         <View style={[styles.infoCard, { backgroundColor: theme.surface }]}>
           <Ionicons name="information-circle" size={20} color={theme.primary} />
-          <Text style={[styles.infoText, { color: theme.textSecondary }]}>All clinical tools are powered by Google Gemini AI and are intended for educational purposes. Always verify with standard clinical references.</Text>
+          <Text style={[styles.infoText, { color: theme.textSecondary }]}>All clinical tools are powered by AI and are intended for educational purposes. Always verify with standard clinical references.</Text>
         </View>
       </View>
     </ScrollView>

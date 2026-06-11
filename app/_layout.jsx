@@ -1,13 +1,9 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useColorScheme } from 'react-native';
-import { DarkColors, Colors } from '../constants/theme';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
 
-export default function RootLayout() {
-  const scheme = useColorScheme();
-  const isDark = scheme === 'dark';
-  const theme = isDark ? DarkColors : Colors;
-
+function RootLayoutInner() {
+  const { isDark } = useTheme();
   return (
     <>
       <StatusBar style={isDark ? 'light' : 'dark'} />
@@ -15,6 +11,9 @@ export default function RootLayout() {
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="login" options={{ headerShown: false, animation: 'slide_from_right' }} />
         <Stack.Screen name="register" options={{ headerShown: false, animation: 'slide_from_right' }} />
+        <Stack.Screen name="verify-otp" options={{ headerShown: false, animation: 'slide_from_right' }} />
+        <Stack.Screen name="forgot-password" options={{ headerShown: false, animation: 'slide_from_right' }} />
+        <Stack.Screen name="reset-password" options={{ headerShown: false, animation: 'slide_from_right' }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="assistant" options={{ headerShown: false, animation: 'slide_from_right' }} />
         <Stack.Screen name="dosage" options={{ headerShown: false, animation: 'slide_from_right' }} />
@@ -24,5 +23,13 @@ export default function RootLayout() {
         <Stack.Screen name="roadmap" options={{ headerShown: false, animation: 'slide_from_right' }} />
       </Stack>
     </>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <ThemeProvider>
+      <RootLayoutInner />
+    </ThemeProvider>
   );
 }

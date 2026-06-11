@@ -1,20 +1,22 @@
 import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, useColorScheme, Switch, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, Alert } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Colors, DarkColors } from '../../constants/theme';
+import { useTheme } from '../context/ThemeContext';
 import { getStoredUser, setStoredUser, setToken, userApi, aiApi, statsApi } from '../../services/api';
 
 export default function Profile() {
-  const scheme = useColorScheme();
-  const isDark = scheme === 'dark';
-  const theme = isDark ? DarkColors : Colors;
+  const { isDark, theme, toggleDarkMode } = useTheme();
+  const [darkMode, setDarkMode] = useState(isDark);
 
   const [user, setUser] = useState(null);
   const [stats, setStats] = useState({ minutesStudied: 0, questionsAnswered: 0, connectionsCount: 0 });
   const [insight, setInsight] = useState('');
-  const [darkMode, setDarkMode] = useState(isDark);
+
+  useEffect(() => {
+    setDarkMode(isDark);
+  }, [isDark]);
 
   useEffect(() => {
     loadData();
@@ -34,18 +36,26 @@ export default function Profile() {
     Alert.alert('Logout', 'Are you sure you want to logout?', [
       { text: 'Cancel', style: 'cancel' },
       { text: 'Logout', style: 'destructive', onPress: async () => {
-        await setToken(null);
-        await setStoredUser(null);
-        router.replace('/');
+        try {
+          await setToken(null);
+          await setStoredUser(null);
+        } catch {}
+        router.replace('/login');
       }},
     ]);
+  }
+
+  function formatDate(d) {
+    if (!d) return 'N/A';
+    const date = new Date(d);
+    return date.toLocaleDateString('en-NG', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
   }
 
   const initials = user?.name?.split(' ').map(n => n.charAt(0)).join('').toUpperCase() || 'N';
 
   const menuItems = [
     { icon: 'map-outline', label: 'Career Roadmap', route: '/roadmap', color: '#8B5CF6' },
-    { icon: 'trophy-outline', label: `Achievements (${user?.achievements?.length || 0})`, color: '#F59E0B' },
+    { icon: 'trophy-outline', label: `Achievements (${user?.achievements?.length || 0})`, route: '/roadmap', color: '#F59E0B' },
     { icon: 'people-outline', label: `${stats.connectionsCount} Connections`, color: '#3B82F6' },
   ];
 
@@ -89,9 +99,20 @@ export default function Profile() {
           </View>
         ) : null}
 
+        <View style={[styles.insightCard, { backgroundColor: theme.surface }]}>
+          <View style={styles.insightHeader}>
+            <Ionicons name="time-outline" size={18} color={theme.primary} />
+            <Text style={[styles.insightTitle, { color: theme.text }]}>Account Info</Text>
+          </View>
+          <Text style={[styles.insightText, { color: theme.textSecondary }]}>ID: {user?.id?.slice(-8) || 'N/A'}</Text>
+          <Text style={[styles.insightText, { color: theme.textSecondary }]}>Logins: {user?.loginCount || 1}</Text>
+          <Text style={[styles.insightText, { color: theme.textSecondary }]}>Last Login: {formatDate(user?.lastLogin)}</Text>
+          <Text style={[styles.insightText, { color: theme.textSecondary }]}>Joined: {formatDate(user?.createdAt)}</Text>
+        </View>
+
         <View style={styles.menuSection}>
           {menuItems.map((item, i) => (
-            <TouchableOpacity key={i} style={[styles.menuItem, { backgroundColor: theme.surface }]} onPress={() => router.push(item.route)}>
+            <TouchableOpacity key={i} style={[styles.menuItem, { backgroundColor: theme.surface }]} onPress={() => item.route && router.push(item.route)}>
               <View style={[styles.menuIcon, { backgroundColor: item.color + '15' }]}>
                 <Ionicons name={item.icon} size={20} color={item.color} />
               </View>
@@ -104,7 +125,7 @@ export default function Profile() {
         <View style={[styles.settingItem, { backgroundColor: theme.surface }]}>
           <Ionicons name="moon-outline" size={20} color={theme.text} />
           <Text style={[styles.settingLabel, { color: theme.text }]}>Dark Mode</Text>
-          <Switch value={darkMode} onValueChange={setDarkMode} trackColor={{ false: theme.border, true: theme.primary }} thumbColor="#fff" />
+          <Switch value={darkMode} onValueChange={(val) => { setDarkMode(val); toggleDarkMode(val); if (user?.id) userApi.updateProfile({ darkMode: val }).catch(() => {}); }} trackColor={{ false: theme.border, true: theme.primary }} thumbColor="#fff" />
         </View>
 
         <TouchableOpacity style={[styles.logoutBtn, { backgroundColor: theme.surface }]} onPress={handleLogout}>

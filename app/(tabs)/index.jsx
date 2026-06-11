@@ -1,15 +1,13 @@
 import { useEffect, useState, useCallback } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, RefreshControl, useColorScheme } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, RefreshControl } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors, DarkColors, Spacing, FontSize } from '../../constants/theme';
 import { aiApi, statsApi, getStoredUser } from '../../services/api';
+import { useTheme } from '../context/ThemeContext';
 
 export default function Dashboard() {
-  const scheme = useColorScheme();
-  const isDark = scheme === 'dark';
-  const theme = isDark ? DarkColors : Colors;
+  const { isDark, theme } = useTheme();
 
   const [user, setUser] = useState(null);
   const [insights, setInsights] = useState(null);

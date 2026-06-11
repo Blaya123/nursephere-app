@@ -1,0 +1,54 @@
+Starting project at C:\Users\iTECH\Desktop\NRSP\app
+Starting Metro Bundler
+
+warning: Bundler cache is empty, rebuilding (this may take a minute)
+ WARN  Failed to download the latest version of React Native DevTools. Using a fallback version instead. Connect to the internet or check your network settings.
+Waiting on http://localhost:8081
+Logs for your project will appear below.
+Android Bundled 20282ms node_modules\expo-router\entry.js (1416 modules)
+Android Bundled 18675ms node_modules\expo-router\entry.js (1448 modules)
+Android Bundled 1056ms node_modules\expo-router\entry.js (1 module)
+Android Bundled 200ms node_modules\expo-router\entry.js (1 module)
+ ERROR  [Error: Exception in HostFunction: java.lang.IllegalStateException: Required value was null.
+	at com.facebook.react.views.text.TextLayoutManager.getOrCreateSpannableForText(TextLayoutManager.kt:538)
+	at com.facebook.react.views.text.TextLayoutManager.createLayoutForMeasurement(TextLayoutManager.kt:812)
+	at com.facebook.react.views.text.TextLayoutManager.measureText(TextLayoutManager.kt:1100)
+	at com.facebook.react.fabric.FabricUIManager.measureText(FabricUIManager.java:639)
+	at com.facebook.jni.NativeRunnable.run(Native Method)
+	at android.os.Handler.handleCallback(Handler.java:959)
+	at android.os.Handler.dispatchMessage(Handler.java:100)
+	at com.facebook.react.bridge.queue.MessageQueueThreadHandler.dispatchMessage(MessageQueueThreadHandler.kt:21)
+	at android.os.Looper.loopOnce(Looper.java:257)
+	at android.os.Looper.loop(Looper.java:342)
+	at com.facebook.react.bridge.queue.MessageQueueThreadImpl$Companion.startNewBackgroundThread$lambda$0(MessageQueueThreadImpl.kt:152)
+	at com.facebook.react.bridge.queue.MessageQueueThreadImpl$Companion.$r8$lambda$YYXYCFexeoKtAeDpeNYkxZZlpbA(Unknown Source:0)
+	at com.facebook.react.bridge.queue.MessageQueueThreadImpl$Companion$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+	at java.lang.Thread.run(Thread.java:1012)
+] 
+
+Code: ReactFabric-dev.js
+[0m [90m 15962 |[39m     }
+ [90m 15963 |[39m     [36mfunction[39m replaceContainerChildren(container[33m,[39m newChildren) {
+[31m[1m>[22m[39m[90m 15964 |[39m       completeRoot(container[33m.[39mcontainerTag[33m,[39m newChildren)[33m;[39m
+ [90m       |[39m                   [31m[1m^[22m[39m
+ [90m 15965 |[39m     }
+ [90m 15966 |[39m     [36mfunction[39m nativeOnUncaughtError(error[33m,[39m errorInfo) {
+ [90m 15967 |[39m       [33m![39m[35m1[39m [33m!==[39m[0m
+Call Stack
+  completeRoot (<native>)
+  replaceContainerChildren (node_modules\react-native\Libraries\Renderer\implementations\ReactFabric-dev.js:15964:19)
+  runWithFiberInDEV (node_modules\react-native\Libraries\Renderer\implementations\ReactFabric-dev.js:700:21)
+  commitMutationEffectsOnFiber (node_modules\react-native\Libraries\Renderer\implementations\ReactFabric-dev.js:11571:32)
+  flushMutationEffects (node_modules\react-native\Libraries\Renderer\implementations\ReactFabric-dev.js:14471:43)
+  commitRoot (node_modules\react-native\Libraries\Renderer\implementations\ReactFabric-dev.js:14445:29)
+  commitRootWhenReady (node_modules\react-native\Libraries\Renderer\implementations\ReactFabric-dev.js:13352:17)
+  performWorkOnRoot (node_modules\react-native\Libraries\Renderer\implementations\ReactFabric-dev.js:13299:34)
+  performWorkOnRootViaSchedulerTask (node_modules\react-native\Libraries\Renderer\implementations\ReactFabric-dev.js:3673:24)
+Android Bundled 1311ms node_modules\expo-router\entry.js (1 module)
+Android Bundled 1131ms node_modules\expo-router\entry.js (1 module)
+Android Bundled 96ms node_modules\expo-router\entry.js (1 module)
+Android Bundled 1230ms node_modules\expo-router\entry.js (1 module)
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"

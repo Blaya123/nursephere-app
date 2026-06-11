@@ -24,7 +24,19 @@ export default function Login() {
       await setStoredUser(data.user);
       router.replace('/(tabs)');
     } catch (err) {
-      Alert.alert('Login Failed', err.message);
+      if (err.message?.includes('needsOTP') || err.message?.includes('verify your email')) {
+        Alert.alert('Email Not Verified', 'Please verify your email first. A new OTP will be sent.', [
+          { text: 'Send OTP', onPress: async () => {
+            try {
+              await auth.sendOTP({ email });
+              router.push({ pathname: '/verify-otp', params: { email } });
+            } catch {}
+          }},
+          { text: 'Cancel', style: 'cancel' },
+        ]);
+      } else {
+        Alert.alert('Login Failed', err.message);
+      }
     } finally {
       setLoading(false);
     }
@@ -53,6 +65,10 @@ export default function Login() {
               <Ionicons name={showPassword ? 'eye-off-outline' : 'eye-outline'} size={20} color="rgba(255,255,255,0.6)" />
             </TouchableOpacity>
           </View>
+
+          <TouchableOpacity onPress={() => router.push('/forgot-password')}>
+            <Text style={[styles.link, { textAlign: 'right', marginTop: -8 }]}>Forgot Password?</Text>
+          </TouchableOpacity>
 
           <TouchableOpacity style={[styles.button, loading && { opacity: 0.7 }]} onPress={handleLogin} disabled={loading}>
             <Text style={styles.buttonText}>{loading ? 'Signing in...' : 'Sign In'}</Text>

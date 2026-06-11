@@ -1,14 +1,13 @@
 import { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, useColorScheme, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors, DarkColors } from '../constants/theme';
+;
 import { aiApi } from '../services/api';
+import { useTheme } from './context/ThemeContext';
 
 export default function Diagnosis() {
-  const scheme = useColorScheme();
-  const isDark = scheme === 'dark';
-  const theme = isDark ? DarkColors : Colors;
+  const { isDark, theme } = useTheme();
 
   const [symptoms, setSymptoms] = useState('');
   const [result, setResult] = useState('');
