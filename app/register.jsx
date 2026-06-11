@@ -23,8 +23,7 @@ export default function Register() {
     setLoading(true);
     try {
       const data = await auth.sendOTP({ email });
-      const devOtp = data.emailError ? (data.otp || '') : '';
-      router.push({ pathname: '/verify-otp', params: { name, email, password, year, institution, devOtp } });
+      router.push({ pathname: '/verify-otp', params: { name, email, password, year, institution, devOtp: data.otp || '' } });
     } catch (err) {
       Alert.alert('Error', err.message);
     } finally {

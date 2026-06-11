@@ -20,7 +20,7 @@ export default function ForgotPassword() {
     try {
       const data = await auth.forgotPassword({ email });
       setSent(true);
-      if (data.emailError && data.resetToken) setDevToken(data.resetToken);
+      if (data.resetToken) setDevToken(data.resetToken);
     } catch (err) {
       Alert.alert('Error', err.message);
     } finally {

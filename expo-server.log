@@ -52,3 +52,241 @@ Android Bundled 1230ms node_modules\expo-router\entry.js (1 module)
  WARN  "quote" is not a valid icon name for family "ionicons"
  WARN  "quote" is not a valid icon name for family "ionicons"
  WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+Android Bundling failed 526ms node_modules\expo-router\entry.js (1 module)
+Unable to resolve "../constants/theme" from "app\context\ThemeContext.jsx"
+[0m [90m 2 |[39m [36mimport[39m { useColorScheme } [36mfrom[39m [32m'react-native'[39m[33m;[39m
+ [90m 3 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+[31m[1m>[22m[39m[90m 4 |[39m [36mimport[39m { [33mDarkColors[39m[33m,[39m [33mColors[39m } [36mfrom[39m [32m'../constants/theme'[39m[33m;[39m
+ [90m   |[39m                                     [31m[1m^[22m[39m
+ [90m 5 |[39m
+ [90m 6 |[39m [36mconst[39m [33mThemeContext[39m [33m=[39m createContext()[33m;[39m
+ [90m 7 |[39m[0m
+
+Import stack:
+
+ app\context\ThemeContext.jsx
+ | import "../constants/theme"
+
+ app\diagnosis.jsx
+ | import "./context/ThemeContext"
+
+ app (require.context)
+
+Android Bundling failed 36ms node_modules\expo-router\entry.js (1 module)
+Unable to resolve "../constants/theme" from "app\context\ThemeContext.jsx"
+[0m [90m 2 |[39m [36mimport[39m { useColorScheme } [36mfrom[39m [32m'react-native'[39m[33m;[39m
+ [90m 3 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+[31m[1m>[22m[39m[90m 4 |[39m [36mimport[39m { [33mDarkColors[39m[33m,[39m [33mColors[39m } [36mfrom[39m [32m'../constants/theme'[39m[33m;[39m
+ [90m   |[39m                                     [31m[1m^[22m[39m
+ [90m 5 |[39m
+ [90m 6 |[39m [36mconst[39m [33mThemeContext[39m [33m=[39m createContext()[33m;[39m
+ [90m 7 |[39m[0m
+
+Import stack:
+
+ app\context\ThemeContext.jsx
+ | import "../constants/theme"
+
+ app\diagnosis.jsx
+ | import "./context/ThemeContext"
+
+ app (require.context)
+
+Android Bundling failed 20ms node_modules\expo-router\entry.js (1 module)
+Unable to resolve "../constants/theme" from "app\context\ThemeContext.jsx"
+[0m [90m 2 |[39m [36mimport[39m { useColorScheme } [36mfrom[39m [32m'react-native'[39m[33m;[39m
+ [90m 3 |[39m [36mimport[39m [33mAsyncStorage[39m [36mfrom[39m [32m'@react-native-async-storage/async-storage'[39m[33m;[39m
+[31m[1m>[22m[39m[90m 4 |[39m [36mimport[39m { [33mDarkColors[39m[33m,[39m [33mColors[39m } [36mfrom[39m [32m'../constants/theme'[39m[33m;[39m
+ [90m   |[39m                                     [31m[1m^[22m[39m
+ [90m 5 |[39m
+ [90m 6 |[39m [36mconst[39m [33mThemeContext[39m [33m=[39m createContext()[33m;[39m
+ [90m 7 |[39m[0m
+
+Import stack:
+
+ app\context\ThemeContext.jsx
+ | import "../constants/theme"
+
+ app\diagnosis.jsx
+ | import "./context/ThemeContext"
+
+ app (require.context)
+
+Android Bundled 1225ms node_modules\expo-router\entry.js (1 module)
+ WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+ ERROR  [ReferenceError: Property 'loading' doesn't exist] 
+
+Code: register.jsx
+[0m [90m 76 |[39m             [33m<[39m[33m/[39m[33mView[39m[33m>[39m
+ [90m 77 |[39m
+[31m[1m>[22m[39m[90m 78 |[39m             [33m<[39m[33mTouchableOpacity[39m style[33m=[39m{[styles[33m.[39mbutton[33m,[39m loading [33m&&[39m { opacity[33m:[39m [35m0.7[39m }]} onPress[33m=[39m{handleRegister} disabled[33m=[39m{loading}[33m>[39m
+ [90m    |[39m                                                      [31m[1m^[22m[39m
+ [90m 79 |[39m               [33m<[39m[33mText[39m style[33m=[39m{styles[33m.[39mbuttonText}[33m>[39m{loading [33m?[39m [32m'Creating...'[39m [33m:[39m [32m'Create Account'[39m}[33m<[39m[33m/[39m[33mText[39m[33m>[39m
+ [90m 80 |[39m             [33m<[39m[33m/[39m[33mTouchableOpacity[39m[33m>[39m
+ [90m 81 |[39m[0m
+Call Stack
+  Register (app\register.jsx:78:54) 
+
+Code: _layout.jsx
+[0m [90m  8 |[39m     [33m<[39m[33m>[39m
+ [90m  9 |[39m       [33m<[39m[33mStatusBar[39m style[33m=[39m{isDark [33m?[39m [32m'light'[39m [33m:[39m [32m'dark'[39m} [33m/[39m[33m>[39m
+[31m[1m>[22m[39m[90m 10 |[39m       [33m<[39m[33mStack[39m screenOptions[33m=[39m{{ headerShown[33m:[39m [36mfalse[39m }}[33m>[39m
+ [90m    |[39m       [31m[1m^[22m[39m
+ [90m 11 |[39m         [33m<[39m[33mStack[39m[33m.[39m[33mScreen[39m name[33m=[39m[32m"index"[39m options[33m=[39m{{ headerShown[33m:[39m [36mfalse[39m }} [33m/[39m[33m>[39m
+ [90m 12 |[39m         [33m<[39m[33mStack[39m[33m.[39m[33mScreen[39m name[33m=[39m[32m"login"[39m options[33m=[39m{{ headerShown[33m:[39m [36mfalse[39m[33m,[39m animation[33m:[39m [32m'slide_from_right'[39m }} [33m/[39m[33m>[39m
+ [90m 13 |[39m         [33m<[39m[33mStack[39m[33m.[39m[33mScreen[39m name[33m=[39m[32m"register"[39m options[33m=[39m{{ headerShown[33m:[39m [36mfalse[39m[33m,[39m animation[33m:[39m [32m'slide_from_right'[39m }} [33m/[39m[33m>[39m[0m
+Call Stack
+  RootLayoutInner (app\_layout.jsx:10:7)
+  RootLayout (app\_layout.jsx:29:7)
+Android Bundled 78ms node_modules\expo-router\entry.js (1 module)
+ WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+ ERROR  [ReferenceError: Property 'loading' doesn't exist] 
+
+Code: register.jsx
+[0m [90m 76 |[39m             [33m<[39m[33m/[39m[33mView[39m[33m>[39m
+ [90m 77 |[39m
+[31m[1m>[22m[39m[90m 78 |[39m             [33m<[39m[33mTouchableOpacity[39m style[33m=[39m{[styles[33m.[39mbutton[33m,[39m loading [33m&&[39m { opacity[33m:[39m [35m0.7[39m }]} onPress[33m=[39m{handleRegister} disabled[33m=[39m{loading}[33m>[39m
+ [90m    |[39m                                                      [31m[1m^[22m[39m
+ [90m 79 |[39m               [33m<[39m[33mText[39m style[33m=[39m{styles[33m.[39mbuttonText}[33m>[39m{loading [33m?[39m [32m'Creating...'[39m [33m:[39m [32m'Create Account'[39m}[33m<[39m[33m/[39m[33mText[39m[33m>[39m
+ [90m 80 |[39m             [33m<[39m[33m/[39m[33mTouchableOpacity[39m[33m>[39m
+ [90m 81 |[39m[0m
+Call Stack
+  Register (app\register.jsx:78:54) 
+
+Code: _layout.jsx
+[0m [90m  8 |[39m     [33m<[39m[33m>[39m
+ [90m  9 |[39m       [33m<[39m[33mStatusBar[39m style[33m=[39m{isDark [33m?[39m [32m'light'[39m [33m:[39m [32m'dark'[39m} [33m/[39m[33m>[39m
+[31m[1m>[22m[39m[90m 10 |[39m       [33m<[39m[33mStack[39m screenOptions[33m=[39m{{ headerShown[33m:[39m [36mfalse[39m }}[33m>[39m
+ [90m    |[39m       [31m[1m^[22m[39m
+ [90m 11 |[39m         [33m<[39m[33mStack[39m[33m.[39m[33mScreen[39m name[33m=[39m[32m"index"[39m options[33m=[39m{{ headerShown[33m:[39m [36mfalse[39m }} [33m/[39m[33m>[39m
+ [90m 12 |[39m         [33m<[39m[33mStack[39m[33m.[39m[33mScreen[39m name[33m=[39m[32m"login"[39m options[33m=[39m{{ headerShown[33m:[39m [36mfalse[39m[33m,[39m animation[33m:[39m [32m'slide_from_right'[39m }} [33m/[39m[33m>[39m
+ [90m 13 |[39m         [33m<[39m[33mStack[39m[33m.[39m[33mScreen[39m name[33m=[39m[32m"register"[39m options[33m=[39m{{ headerShown[33m:[39m [36mfalse[39m[33m,[39m animation[33m:[39m [32m'slide_from_right'[39m }} [33m/[39m[33m>[39m[0m
+Call Stack
+  RootLayoutInner (app\_layout.jsx:10:7)
+  RootLayout (app\_layout.jsx:29:7)
+Android Bundled 126ms node_modules\expo-router\entry.js (1 module)
+ WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+ WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+Android Bundled 84ms node_modules\expo-router\entry.js (1 module)
+ WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ ERROR  [ReferenceError: Property 'user' doesn't exist] 
+
+Code: profile.jsx
+[0m [90m 48 |[39m   }
+ [90m 49 |[39m
+[31m[1m>[22m[39m[90m 50 |[39m   [36mconst[39m initials [33m=[39m user[33m?[39m[33m.[39mname[33m?[39m[33m.[39msplit([32m' '[39m)[33m.[39mmap(n [33m=>[39m n[33m.[39mcharAt([35m0[39m))[33m.[39mjoin([32m''[39m)[33m.[39mtoUpperCase() [33m||[39m [32m'N'[39m[33m;[39m
+ [90m    |[39m                    [31m[1m^[22m[39m
+ [90m 51 |[39m
+ [90m 52 |[39m   [36mconst[39m menuItems [33m=[39m [
+ [90m 53 |[39m     { icon[33m:[39m [32m'map-outline'[39m[33m,[39m label[33m:[39m [32m'Career Roadmap'[39m[33m,[39m route[33m:[39m [32m'/roadmap'[39m[33m,[39m color[33m:[39m [32m'#8B5CF6'[39m }[33m,[39m[0m
+Call Stack
+  Profile (app\(tabs)\profile.jsx:50:20) 
+
+Code: _layout.jsx
+[0m [90m  8 |[39m
+ [90m  9 |[39m   [36mreturn[39m (
+[31m[1m>[22m[39m[90m 10 |[39m     [33m<[39m[33mTabs[39m
+ [90m    |[39m     [31m[1m^[22m[39m
+ [90m 11 |[39m       screenOptions[33m=[39m{{
+ [90m 12 |[39m         headerShown[33m:[39m [36mfalse[39m[33m,[39m
+ [90m 13 |[39m         tabBarStyle[33m:[39m {[0m
+Call Stack
+  TabLayout (app\(tabs)\_layout.jsx:10:5)
+  RootLayoutInner (app\_layout.jsx:10:7)
+  RootLayout (app\_layout.jsx:29:7)
+Android Bundled 181ms node_modules\expo-router\entry.js (1 module)
+ WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ ERROR  [ReferenceError: Property 'Channels' doesn't exist] 
+
+Code: community.jsx
+[0m [90m 55 |[39m
+ [90m 56 |[39m   [36mfunction[39m getChannelIcon(id) {
+[31m[1m>[22m[39m[90m 57 |[39m     [36mconst[39m c [33m=[39m [33mChannels[39m[33m.[39mfind(ch [33m=>[39m ch[33m.[39mid [33m===[39m id)[33m;[39m
+ [90m    |[39m               [31m[1m^[22m[39m
+ [90m 58 |[39m     [36mreturn[39m c[33m?[39m[33m.[39micon [33m||[39m [32m'💬'[39m[33m;[39m
+ [90m 59 |[39m   }
+ [90m 60 |[39m[0m
+Call Stack
+  getChannelIcon (app\(tabs)\community.jsx:57:15)
+  Community (app\(tabs)\community.jsx:65:61) 
+
+Code: _layout.jsx
+[0m [90m  8 |[39m
+ [90m  9 |[39m   [36mreturn[39m (
+[31m[1m>[22m[39m[90m 10 |[39m     [33m<[39m[33mTabs[39m
+ [90m    |[39m     [31m[1m^[22m[39m
+ [90m 11 |[39m       screenOptions[33m=[39m{{
+ [90m 12 |[39m         headerShown[33m:[39m [36mfalse[39m[33m,[39m
+ [90m 13 |[39m         tabBarStyle[33m:[39m {[0m
+Call Stack
+  TabLayout (app\(tabs)\_layout.jsx:10:5)
+  RootLayoutInner (app\_layout.jsx:10:7)
+  RootLayout (app\_layout.jsx:29:7)
+Android Bundled 96ms node_modules\expo-router\entry.js (1 module)
+ WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ ERROR  [TypeError: Cannot read property 'pathname' of undefined] 
+
+Code: profile.jsx
+[0m [90m 113 |[39m         [33m<[39m[33mView[39m style[33m=[39m{styles[33m.[39mmenuSection}[33m>[39m
+ [90m 114 |[39m           {menuItems[33m.[39mmap((item[33m,[39m i) [33m=>[39m (
+[31m[1m>[22m[39m[90m 115 |[39m             [33m<[39m[33mTouchableOpacity[39m key[33m=[39m{i} style[33m=[39m{[styles[33m.[39mmenuItem[33m,[39m { backgroundColor[33m:[39m theme[33m.[39msurface }]} onPress[33m=[39m{() [33m=>[39m router[33m.[39mpush(item[33m.[39mroute)}[33m>[39m
+ [90m     |[39m                                                                                                                               [31m[1m^[22m[39m
+ [90m 116 |[39m               [33m<[39m[33mView[39m style[33m=[39m{[styles[33m.[39mmenuIcon[33m,[39m { backgroundColor[33m:[39m item[33m.[39mcolor [33m+[39m [32m'15'[39m }]}[33m>[39m
+ [90m 117 |[39m                 [33m<[39m[33mIonicons[39m name[33m=[39m{item[33m.[39micon} size[33m=[39m{[35m20[39m} color[33m=[39m{item[33m.[39mcolor} [33m/[39m[33m>[39m
+ [90m 118 |[39m               [33m<[39m[33m/[39m[33mView[39m[33m>[39m[0m
+Call Stack
+  TouchableOpacity.props.onPress (app\(tabs)\profile.jsx:115:127)
+Android Bundled 88ms node_modules\expo-router\entry.js (1 module)
+ WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+Android Bundled 92ms node_modules\expo-router\entry.js (1 module)
+ WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+ WARN  "quote" is not a valid icon name for family "ionicons"
+Android Bundled 104ms node_modules\expo-router\entry.js (1 module)
+ WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ INFO  Launching DevTools...
+ INFO  Launching DevTools...
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+ WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+ WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+ WARN  "quote" is not a valid icon name for family "ionicons"
+Android Bundled 1523ms node_modules\expo-router\entry.js (1 module)
+ WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+ WARN  "quote" is not a valid icon name for family "ionicons"
+Android Bundled 367ms node_modules\expo-router\entry.js (1 module)
+ WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+Android Bundled 1488ms node_modules\expo-router\entry.js (1 module)
+ WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
