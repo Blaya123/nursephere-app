@@ -18,7 +18,8 @@
         "monochromeImage": "./assets/android-icon-monochrome.png",
         "backgroundColor": "#008751"
       },
-      "package": "com.nursphere.app"
+      "package": "com.nursphere.app",
+      "softwareKeyboardLayoutMode": "resize"
     },
     "web": {
       "bundler": "metro",

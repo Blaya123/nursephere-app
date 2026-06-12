@@ -5,6 +5,9 @@ import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { auth } from '../services/api';
 
+
+const Container = Platform.OS === 'ios' ? KeyboardAvoidingView : View;
+
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
@@ -30,7 +33,7 @@ export default function ForgotPassword() {
 
   return (
     <LinearGradient colors={['#008751', '#004D2E']} style={styles.container}>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0} style={styles.content}>
+      <Container behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0} style={styles.content}>
         <TouchableOpacity onPress={() => router.back()} style={styles.back}>
           <Ionicons name="arrow-back" size={24} color="#fff" />
         </TouchableOpacity>
@@ -59,7 +62,7 @@ export default function ForgotPassword() {
             </TouchableOpacity>
           )}
         </View>
-      </KeyboardAvoidingView>
+      </Container>
     </LinearGradient>
   );
 }
@@ -77,3 +80,4 @@ const styles = StyleSheet.create({
   buttonText: { color: '#008751', fontSize: 18, fontWeight: '700' },
   devHint: { color: '#FBBF24', fontSize: 13, fontWeight: '600', marginBottom: 16, textAlign: 'center', lineHeight: 20 },
 });
+

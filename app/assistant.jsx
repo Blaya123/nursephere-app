@@ -12,6 +12,8 @@ const SUGGESTIONS = [
   'How to calculate IV drip rate?',
 ];
 
+const Container = Platform.OS === 'ios' ? KeyboardAvoidingView : View;
+
 export default function AIAssistant() {
   const { isDark, theme } = useTheme();
 
@@ -42,7 +44,7 @@ export default function AIAssistant() {
   }
 
   return (
-    <KeyboardAvoidingView style={[styles.container, { backgroundColor: theme.background }]} behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}>
+    <Container style={[styles.container, { backgroundColor: theme.background }]} behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}>
       <View style={[styles.header, { backgroundColor: theme.surface, borderBottomColor: theme.border }]}>
         <View style={styles.headerLeft}>
           <View style={[styles.aiIcon, { backgroundColor: theme.primary + '20' }]}>
@@ -108,7 +110,7 @@ export default function AIAssistant() {
           <Ionicons name="send" size={18} color="#fff" />
         </TouchableOpacity>
       </View>
-    </KeyboardAvoidingView>
+    </Container>
   );
 }
 

@@ -7,6 +7,8 @@ import { useTheme } from '../context/ThemeContext';
 
 const REACTIONS = ['👍', '❤️', '🔥', '😂', '🙏', '💪'];
 
+const Container = Platform.OS === 'ios' ? KeyboardAvoidingView : View;
+
 export default function Community() {
   const { isDark, theme } = useTheme();
 
@@ -59,7 +61,7 @@ export default function Community() {
   }
 
   return (
-    <KeyboardAvoidingView style={[styles.container, { backgroundColor: theme.background }]} behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}>
+    <Container style={[styles.container, { backgroundColor: theme.background }]} behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}>
       <View style={[styles.header, { backgroundColor: theme.surface, borderBottomColor: theme.border }]}>
         <TouchableOpacity style={styles.headerLeft} onPress={() => setShowChannels(!showChannels)}>
           <Text style={[styles.channelIcon]}>{getChannelIcon(activeChannel)}</Text>
@@ -135,7 +137,7 @@ export default function Community() {
           <Ionicons name="send" size={18} color="#fff" />
         </TouchableOpacity>
       </View>
-    </KeyboardAvoidingView>
+    </Container>
   );
 }
 

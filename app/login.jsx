@@ -4,7 +4,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { auth, setToken, setStoredUser } from '../services/api';
-import { Colors } from '../constants/theme';
+
+const Container = Platform.OS === 'ios' ? KeyboardAvoidingView : View;
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -41,7 +42,7 @@ export default function Login() {
 
   return (
     <LinearGradient colors={['#008751', '#004D2E']} style={styles.container}>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0} style={styles.content}>
+      <Container behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0} style={styles.content}>
         <TouchableOpacity onPress={() => router.back()} style={styles.back}>
           <Ionicons name="arrow-back" size={24} color="#fff" />
         </TouchableOpacity>
@@ -75,7 +76,7 @@ export default function Login() {
             <Text style={styles.link}>Don't have an account? Sign Up</Text>
           </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
+      </Container>
     </LinearGradient>
   );
 }

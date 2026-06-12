@@ -5,6 +5,9 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { auth } from '../services/api';
 
+
+const Container = Platform.OS === 'ios' ? KeyboardAvoidingView : View;
+
 export default function ResetPassword() {
   const { email: paramEmail } = useLocalSearchParams();
   const [email, setEmail] = useState(paramEmail || '');
@@ -36,7 +39,7 @@ export default function ResetPassword() {
 
   return (
     <LinearGradient colors={['#008751', '#004D2E']} style={styles.container}>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0} style={styles.content}>
+      <Container behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0} style={styles.content}>
         <TouchableOpacity onPress={() => router.back()} style={styles.back}>
           <Ionicons name="arrow-back" size={24} color="#fff" />
         </TouchableOpacity>
@@ -65,7 +68,7 @@ export default function ResetPassword() {
             <Text style={styles.buttonText}>{loading ? 'Resetting...' : 'Reset Password'}</Text>
           </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
+      </Container>
     </LinearGradient>
   );
 }
@@ -82,3 +85,4 @@ const styles = StyleSheet.create({
   button: { backgroundColor: '#fff', paddingVertical: 16, borderRadius: 16, alignItems: 'center', marginTop: 8 },
   buttonText: { color: '#008751', fontSize: 18, fontWeight: '700' },
 });
+

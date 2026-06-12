@@ -5,6 +5,9 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { auth, setToken, setStoredUser } from '../services/api';
 
+
+const Container = Platform.OS === 'ios' ? KeyboardAvoidingView : View;
+
 export default function VerifyOTP() {
   const { name, email, password, year, institution, devOtp: initialDevOtp, loginFlow } = useLocalSearchParams();
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
@@ -60,7 +63,7 @@ export default function VerifyOTP() {
 
   return (
     <LinearGradient colors={['#008751', '#004D2E']} style={styles.container}>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0} style={styles.content}>
+      <Container behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0} style={styles.content}>
         <TouchableOpacity onPress={() => router.back()} style={styles.back}>
           <Ionicons name="arrow-back" size={24} color="#fff" />
         </TouchableOpacity>
@@ -96,7 +99,7 @@ export default function VerifyOTP() {
         <TouchableOpacity onPress={handleResend} style={{ marginTop: 16 }}>
           <Text style={styles.link}>Resend Code</Text>
         </TouchableOpacity>
-      </KeyboardAvoidingView>
+      </Container>
     </LinearGradient>
   );
 }
@@ -115,3 +118,4 @@ const styles = StyleSheet.create({
   link: { color: 'rgba(255,255,255,0.8)', fontSize: 14, fontWeight: '600' },
   devHint: { color: '#FBBF24', fontSize: 14, fontWeight: '600', marginBottom: 16, textAlign: 'center' },
 });
+
