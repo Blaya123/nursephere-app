@@ -1,9 +1,21 @@
-import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, ActivityIndicator, Alert } from 'react-native';
+import { useState, useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, ActivityIndicator, Alert, Animated } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { userApi, getStoredUser } from '../services/api';
 import { useTheme } from './context/ThemeContext';
+
+function FadeSlideIn({ children, delay = 0, style }) {
+  const anim = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    Animated.timing(anim, { toValue: 1, duration: 400, delay, useNativeDriver: true }).start();
+  }, []);
+  return (
+    <Animated.View style={[style, { opacity: anim, transform: [{ translateY: anim.interpolate({ inputRange: [0, 1], outputRange: [20, 0] }) }] }]}>
+      {children}
+    </Animated.View>
+  );
+}
 
 export default function Connections() {
   const { theme } = useTheme();
@@ -90,33 +102,35 @@ export default function Connections() {
           keyExtractor={(item) => item._id}
           contentContainerStyle={styles.list}
           keyboardShouldPersistTaps="handled"
-          renderItem={({ item }) => (
-            <View style={[styles.userCard, { backgroundColor: theme.surface, borderColor: theme.border }]}>
-              <View style={[styles.avatar, { backgroundColor: theme.primary + '20' }]}>
-                <Text style={[styles.avatarText, { color: theme.primary }]}>{getInitials(item.name)}</Text>
-              </View>
-              <View style={styles.userInfo}>
-                <Text style={[styles.userName, { color: theme.text }]}>{item.name}</Text>
-                <Text style={[styles.userMeta, { color: theme.textSecondary }]}>
-                  {item.role} · Year {item.year}
-                </Text>
-                {item.institution ? (
-                  <Text style={[styles.userInst, { color: theme.textLight }]}>{item.institution}</Text>
-                ) : null}
-                <Text style={[styles.connCount, { color: theme.textLight }]}>{formatConnections(item)}</Text>
-              </View>
-              {isConnected(item._id) ? (
-                <View style={[styles.connectedBadge, { backgroundColor: theme.success + '20' }]}>
-                  <Ionicons name="checkmark-circle" size={16} color={theme.success} />
-                  <Text style={[styles.connectedText, { color: theme.success }]}>Connected</Text>
+          renderItem={({ item, index }) => (
+            <FadeSlideIn delay={index * 60}>
+              <View style={[styles.userCard, { backgroundColor: theme.surface, borderColor: theme.border }]}>
+                <View style={[styles.avatar, { backgroundColor: theme.primary + '20' }]}>
+                  <Text style={[styles.avatarText, { color: theme.primary }]}>{getInitials(item.name)}</Text>
                 </View>
-              ) : (
-                <TouchableOpacity style={[styles.connectBtn, { backgroundColor: theme.primary }]} onPress={() => handleConnect(item._id)}>
-                  <Ionicons name="person-add" size={16} color="#fff" />
-                  <Text style={styles.connectText}>Connect</Text>
-                </TouchableOpacity>
-              )}
-            </View>
+                <View style={styles.userInfo}>
+                  <Text style={[styles.userName, { color: theme.text }]}>{item.name}</Text>
+                  <Text style={[styles.userMeta, { color: theme.textSecondary }]}>
+                    {item.role} · Year {item.year}
+                  </Text>
+                  {item.institution ? (
+                    <Text style={[styles.userInst, { color: theme.textLight }]}>{item.institution}</Text>
+                  ) : null}
+                  <Text style={[styles.connCount, { color: theme.textLight }]}>{formatConnections(item)}</Text>
+                </View>
+                {isConnected(item._id) ? (
+                  <View style={[styles.connectedBadge, { backgroundColor: theme.success + '20' }]}>
+                    <Ionicons name="checkmark-circle" size={16} color={theme.success} />
+                    <Text style={[styles.connectedText, { color: theme.success }]}>Connected</Text>
+                  </View>
+                ) : (
+                  <TouchableOpacity style={[styles.connectBtn, { backgroundColor: theme.primary }]} onPress={() => handleConnect(item._id)}>
+                    <Ionicons name="person-add" size={16} color="#fff" />
+                    <Text style={styles.connectText}>Connect</Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            </FadeSlideIn>
           )}
           ListEmptyComponent={
             <View style={styles.emptyContainer}>

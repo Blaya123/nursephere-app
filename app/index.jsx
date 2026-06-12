@@ -12,6 +12,7 @@ export default function Welcome() {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(50)).current;
   const pulseAnim = useRef(new Animated.Value(1)).current;
+  const featureAnims = useRef([...Array(4)].map(() => new Animated.Value(0))).current;
 
   useEffect(() => {
     Animated.parallel([
@@ -25,6 +26,10 @@ export default function Welcome() {
         Animated.timing(pulseAnim, { toValue: 1, duration: 1500, useNativeDriver: true }),
       ])
     ).start();
+
+    featureAnims.forEach((anim, i) => {
+      Animated.timing(anim, { toValue: 1, duration: 500, delay: 800 + i * 150, useNativeDriver: true }).start();
+    });
   }, []);
 
   useFocusEffect(useCallback(() => {
@@ -57,10 +62,12 @@ export default function Welcome() {
             { icon: 'medkit', text: 'Clinical Tools' },
             { icon: 'map', text: 'Career Roadmap' },
           ].map((f, i) => (
-            <View key={i} style={styles.featureItem}>
-              <Ionicons name={f.icon} size={20} color="#4ADE80" />
-              <Text style={styles.featureText}>{f.text}</Text>
-            </View>
+            <Animated.View key={i} style={{ opacity: featureAnims[i], transform: [{ translateY: featureAnims[i].interpolate({ inputRange: [0, 1], outputRange: [15, 0] }) }] }}>
+              <View style={styles.featureItem}>
+                <Ionicons name={f.icon} size={20} color="#4ADE80" />
+                <Text style={styles.featureText}>{f.text}</Text>
+              </View>
+            </Animated.View>
           ))}
         </View>
 

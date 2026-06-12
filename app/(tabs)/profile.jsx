@@ -1,10 +1,22 @@
-import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, Alert } from 'react-native';
+import { useState, useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, Alert, Animated } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '../context/ThemeContext';
 import { getStoredUser, setStoredUser, setToken, userApi, aiApi, statsApi } from '../../services/api';
+
+function FadeSlideIn({ children, delay = 0, style }) {
+  const anim = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    Animated.timing(anim, { toValue: 1, duration: 400, delay, useNativeDriver: true }).start();
+  }, []);
+  return (
+    <Animated.View style={[style, { opacity: anim, transform: [{ translateY: anim.interpolate({ inputRange: [0, 1], outputRange: [20, 0] }) }] }]}>
+      {children}
+    </Animated.View>
+  );
+}
 
 export default function Profile() {
   const { isDark, theme, toggleDarkMode } = useTheme();
@@ -90,48 +102,58 @@ export default function Profile() {
 
       <View style={styles.body}>
         {insight ? (
-          <View style={[styles.insightCard, { backgroundColor: theme.surface }]}>
-            <View style={styles.insightHeader}>
-              <Ionicons name="bulb" size={18} color={theme.warning} />
-              <Text style={[styles.insightTitle, { color: theme.text }]}>AI Career Insight</Text>
+          <FadeSlideIn delay={100}>
+            <View style={[styles.insightCard, { backgroundColor: theme.surface }]}>
+              <View style={styles.insightHeader}>
+                <Ionicons name="bulb" size={18} color={theme.warning} />
+                <Text style={[styles.insightTitle, { color: theme.text }]}>AI Career Insight</Text>
+              </View>
+              <Text style={[styles.insightText, { color: theme.textSecondary }]}>{insight}</Text>
             </View>
-            <Text style={[styles.insightText, { color: theme.textSecondary }]}>{insight}</Text>
-          </View>
+          </FadeSlideIn>
         ) : null}
 
-        <View style={[styles.insightCard, { backgroundColor: theme.surface }]}>
-          <View style={styles.insightHeader}>
-            <Ionicons name="time-outline" size={18} color={theme.primary} />
-            <Text style={[styles.insightTitle, { color: theme.text }]}>Account Info</Text>
+        <FadeSlideIn delay={200}>
+          <View style={[styles.insightCard, { backgroundColor: theme.surface }]}>
+            <View style={styles.insightHeader}>
+              <Ionicons name="time-outline" size={18} color={theme.primary} />
+              <Text style={[styles.insightTitle, { color: theme.text }]}>Account Info</Text>
+            </View>
+            <Text style={[styles.insightText, { color: theme.textSecondary }]}>ID: {user?.id?.slice(-8) || 'N/A'}</Text>
+            <Text style={[styles.insightText, { color: theme.textSecondary }]}>Logins: {user?.loginCount || 1}</Text>
+            <Text style={[styles.insightText, { color: theme.textSecondary }]}>Last Login: {formatDate(user?.lastLogin)}</Text>
+            <Text style={[styles.insightText, { color: theme.textSecondary }]}>Joined: {formatDate(user?.createdAt)}</Text>
           </View>
-          <Text style={[styles.insightText, { color: theme.textSecondary }]}>ID: {user?.id?.slice(-8) || 'N/A'}</Text>
-          <Text style={[styles.insightText, { color: theme.textSecondary }]}>Logins: {user?.loginCount || 1}</Text>
-          <Text style={[styles.insightText, { color: theme.textSecondary }]}>Last Login: {formatDate(user?.lastLogin)}</Text>
-          <Text style={[styles.insightText, { color: theme.textSecondary }]}>Joined: {formatDate(user?.createdAt)}</Text>
-        </View>
+        </FadeSlideIn>
 
         <View style={styles.menuSection}>
           {menuItems.map((item, i) => (
-            <TouchableOpacity key={i} style={[styles.menuItem, { backgroundColor: theme.surface }]} onPress={() => item.route && router.push(item.route)}>
-              <View style={[styles.menuIcon, { backgroundColor: item.color + '15' }]}>
-                <Ionicons name={item.icon} size={20} color={item.color} />
-              </View>
-              <Text style={[styles.menuLabel, { color: theme.text }]}>{item.label}</Text>
-              <Ionicons name="chevron-forward" size={18} color={theme.textLight} />
-            </TouchableOpacity>
+            <FadeSlideIn key={i} delay={300 + i * 80}>
+              <TouchableOpacity style={[styles.menuItem, { backgroundColor: theme.surface }]} onPress={() => item.route && router.push(item.route)}>
+                <View style={[styles.menuIcon, { backgroundColor: item.color + '15' }]}>
+                  <Ionicons name={item.icon} size={20} color={item.color} />
+                </View>
+                <Text style={[styles.menuLabel, { color: theme.text }]}>{item.label}</Text>
+                <Ionicons name="chevron-forward" size={18} color={theme.textLight} />
+              </TouchableOpacity>
+            </FadeSlideIn>
           ))}
         </View>
 
-        <View style={[styles.settingItem, { backgroundColor: theme.surface }]}>
-          <Ionicons name="moon-outline" size={20} color={theme.text} />
-          <Text style={[styles.settingLabel, { color: theme.text }]}>Dark Mode</Text>
-          <Switch value={darkMode} onValueChange={(val) => { setDarkMode(val); toggleDarkMode(val); if (user?.id) userApi.updateProfile({ darkMode: val }).catch(() => {}); }} trackColor={{ false: theme.border, true: theme.primary }} thumbColor="#fff" />
-        </View>
+        <FadeSlideIn delay={600}>
+          <View style={[styles.settingItem, { backgroundColor: theme.surface }]}>
+            <Ionicons name="moon-outline" size={20} color={theme.text} />
+            <Text style={[styles.settingLabel, { color: theme.text }]}>Dark Mode</Text>
+            <Switch value={darkMode} onValueChange={(val) => { setDarkMode(val); toggleDarkMode(val); if (user?.id) userApi.updateProfile({ darkMode: val }).catch(() => {}); }} trackColor={{ false: theme.border, true: theme.primary }} thumbColor="#fff" />
+          </View>
+        </FadeSlideIn>
 
-        <TouchableOpacity style={[styles.logoutBtn, { backgroundColor: theme.surface }]} onPress={handleLogout}>
-          <Ionicons name="log-out-outline" size={20} color={theme.error} />
-          <Text style={[styles.logoutText, { color: theme.error }]}>Logout</Text>
-        </TouchableOpacity>
+        <FadeSlideIn delay={700}>
+          <TouchableOpacity style={[styles.logoutBtn, { backgroundColor: theme.surface }]} onPress={handleLogout}>
+            <Ionicons name="log-out-outline" size={20} color={theme.error} />
+            <Text style={[styles.logoutText, { color: theme.error }]}>Logout</Text>
+          </TouchableOpacity>
+        </FadeSlideIn>
 
         <Text style={[styles.version, { color: theme.textLight }]}>Nursphere v1.0.0</Text>
       </View>

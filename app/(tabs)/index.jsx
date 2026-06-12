@@ -1,10 +1,22 @@
-import { useEffect, useState, useCallback } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, RefreshControl } from 'react-native';
+import { useEffect, useState, useCallback, useRef } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, RefreshControl, Animated } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { aiApi, statsApi, getStoredUser } from '../../services/api';
 import { useTheme } from '../context/ThemeContext';
+
+function FadeSlideIn({ children, delay = 0, style }) {
+  const anim = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    Animated.timing(anim, { toValue: 1, duration: 400, delay, useNativeDriver: true }).start();
+  }, []);
+  return (
+    <Animated.View style={[style, { opacity: anim, transform: [{ translateY: anim.interpolate({ inputRange: [0, 1], outputRange: [20, 0] }) }] }]}>
+      {children}
+    </Animated.View>
+  );
+}
 
 export default function Dashboard() {
   const { isDark, theme } = useTheme();
@@ -74,11 +86,13 @@ export default function Dashboard() {
               { value: stats.questionsAnswered, label: 'Questions', icon: 'checkbox-outline' },
               { value: stats.connectionsCount, label: 'Connections', icon: 'people-outline' },
             ].map((s, i) => (
-              <View key={i} style={styles.statCard}>
-                <Ionicons name={s.icon} size={16} color="#4ADE80" />
-                <Text style={styles.statValue}>{s.value}</Text>
-                <Text style={styles.statLabel}>{s.label}</Text>
-              </View>
+              <FadeSlideIn key={i} delay={i * 100}>
+                <View style={styles.statCard}>
+                  <Ionicons name={s.icon} size={16} color="#4ADE80" />
+                  <Text style={styles.statValue}>{s.value}</Text>
+                  <Text style={styles.statLabel}>{s.label}</Text>
+                </View>
+              </FadeSlideIn>
             ))}
           </View>
         </LinearGradient>
@@ -124,12 +138,14 @@ export default function Dashboard() {
           <Text style={[styles.sectionTitle, { color: theme.text }]}>Quick Access</Text>
           <View style={styles.quickGrid}>
             {quickActions.map((action, i) => (
-              <TouchableOpacity key={i} style={[styles.quickCard, { backgroundColor: theme.surface }]} onPress={() => router.push(action.route)}>
-                <View style={[styles.quickIcon, { backgroundColor: action.color + '20' }]}>
-                  <Ionicons name={action.icon} size={24} color={action.color} />
-                </View>
-                <Text style={[styles.quickLabel, { color: theme.text }]}>{action.label}</Text>
-              </TouchableOpacity>
+              <FadeSlideIn key={i} delay={i * 80} style={{ width: '47%' }}>
+                <TouchableOpacity style={[styles.quickCard, { backgroundColor: theme.surface }]} onPress={() => router.push(action.route)}>
+                  <View style={[styles.quickIcon, { backgroundColor: action.color + '20' }]}>
+                    <Ionicons name={action.icon} size={24} color={action.color} />
+                  </View>
+                  <Text style={[styles.quickLabel, { color: theme.text }]}>{action.label}</Text>
+                </TouchableOpacity>
+              </FadeSlideIn>
             ))}
           </View>
         </View>
