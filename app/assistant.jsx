@@ -60,6 +60,7 @@ export default function AIAssistant() {
         data={messages}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.messagesList}
+        style={{ flex: 1 }}
         keyboardShouldPersistTaps="handled"
         onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
         ListHeaderComponent={() => !loading && messages.length === 1 ? (

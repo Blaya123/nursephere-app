@@ -89,7 +89,7 @@ export default function Community() {
       )}
 
       {loading ? (
-        <View style={styles.loadingContainer}>
+        <View style={[styles.loadingContainer, { flex: 1 }]}>
           <ActivityIndicator size="large" color={theme.primary} />
         </View>
       ) : (
@@ -98,6 +98,7 @@ export default function Community() {
           data={messages}
           keyExtractor={(item) => item._id}
           contentContainerStyle={styles.messagesList}
+          style={{ flex: 1 }}
           onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
           keyboardShouldPersistTaps="handled"
           renderItem={({ item }) => (
