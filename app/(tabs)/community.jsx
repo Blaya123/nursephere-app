@@ -59,7 +59,7 @@ export default function Community() {
   }
 
   return (
-    <KeyboardAvoidingView style={[styles.container, { backgroundColor: theme.background }]} behavior={Platform.OS === 'ios' ? 'padding' : 'padding'} keyboardVerticalOffset={Platform.OS === 'android' ? 0 : 90}>
+    <KeyboardAvoidingView style={[styles.container, { backgroundColor: theme.background }]} behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}>
       <View style={[styles.header, { backgroundColor: theme.surface, borderBottomColor: theme.border }]}>
         <TouchableOpacity style={styles.headerLeft} onPress={() => setShowChannels(!showChannels)}>
           <Text style={[styles.channelIcon]}>{getChannelIcon(activeChannel)}</Text>
