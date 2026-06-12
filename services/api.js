@@ -61,6 +61,7 @@ export const auth = {
   login: (body) => request('/api/auth/login', { method: 'POST', body: JSON.stringify(body) }),
   forgotPassword: (body) => request('/api/auth/forgot-password', { method: 'POST', body: JSON.stringify(body) }),
   resetPassword: (body) => request('/api/auth/reset-password', { method: 'POST', body: JSON.stringify(body) }),
+  changePassword: (body) => request('/api/auth/change-password', { method: 'PUT', body: JSON.stringify(body) }),
 };
 
 export const userApi = {
@@ -68,10 +69,19 @@ export const userApi = {
   updateProfile: (body) => request('/api/user/profile', { method: 'PUT', body: JSON.stringify(body) }),
   getUsers: () => request('/api/user/all'),
   connect: (userId) => request('/api/user/connect', { method: 'POST', body: JSON.stringify({ userId }) }),
+  getConnections: () => request('/api/user/connections'),
+  getUserById: (id) => request(`/api/user/${id}`),
+  removeConnection: (userId) => request('/api/user/remove-connection', { method: 'POST', body: JSON.stringify({ userId }) }),
+  blockUser: (userId) => request('/api/user/block', { method: 'POST', body: JSON.stringify({ userId }) }),
+  unblockUser: (userId) => request('/api/user/unblock', { method: 'POST', body: JSON.stringify({ userId }) }),
+  getBlockedUsers: () => request('/api/user/blocked'),
 };
 
 export const aiApi = {
-  chat: (message, history = []) => request('/api/ai/chat', { method: 'POST', body: JSON.stringify({ message, history }) }),
+  chat: (message, history = [], sessionId) => request('/api/ai/chat', { method: 'POST', body: JSON.stringify({ message, history, sessionId }) }),
+  getHistory: () => request('/api/ai/history'),
+  getSession: (id) => request(`/api/ai/history/${id}`),
+  deleteSession: (id) => request(`/api/ai/history/${id}`, { method: 'DELETE' }),
   procedure: (name) => request('/api/ai/procedure', { method: 'POST', body: JSON.stringify({ name }) }),
   diagnosis: (symptoms) => request('/api/ai/diagnosis', { method: 'POST', body: JSON.stringify({ symptoms }) }),
   dailyInsights: () => request('/api/ai/daily-insights'),
@@ -90,6 +100,14 @@ export const chatApi = {
   sendMessage: (body) => request('/api/chat/messages', { method: 'POST', body: JSON.stringify(body) }),
   addReaction: (messageId, emoji) => request('/api/chat/reaction', { method: 'POST', body: JSON.stringify({ messageId, emoji }) }),
   getSeedUsers: () => request('/api/chat/seed-users'),
+  getConversations: () => request('/api/chat/conversations'),
+  getOrCreateConversation: (otherUserId) => request('/api/chat/conversations', { method: 'POST', body: JSON.stringify({ otherUserId }) }),
+  getDMMessages: (conversationId) => request(`/api/chat/conversations/${conversationId}/messages`),
+  sendDMMessage: (conversationId, text) => request(`/api/chat/conversations/${conversationId}/messages`, { method: 'POST', body: JSON.stringify({ text }) }),
+  getUnreadCount: () => request('/api/chat/unread-count'),
+  deleteMessage: (conversationId, messageId) => request(`/api/chat/conversations/${conversationId}/messages/${messageId}`, { method: 'DELETE' }),
+  acceptConversation: (conversationId) => request(`/api/chat/conversations/${conversationId}/accept`, { method: 'PUT' }),
+  rejectConversation: (conversationId) => request(`/api/chat/conversations/${conversationId}/reject`, { method: 'PUT' }),
 };
 
 export const statsApi = {
@@ -100,4 +118,27 @@ export const statsApi = {
 export const drugsApi = {
   getAll: (search) => request(`/api/drugs${search ? `?search=${search}` : ''}`),
   getByName: (name) => request(`/api/drugs/${name}`),
+};
+
+export const apApi = {
+  get: () => request('/api/ap'),
+  getProgrammes: () => request('/api/ap/programmes'),
+};
+
+export const notificationsApi = {
+  get: () => request('/api/notifications'),
+  markRead: (id) => request(`/api/notifications/${id}/read`, { method: 'PUT' }),
+  markAllRead: () => request('/api/notifications/read-all', { method: 'PUT' }),
+};
+
+export const newsApi = {
+  get: () => request('/api/news'),
+};
+
+export const adminApi = {
+  dashboard: () => request('/api/admin/dashboard'),
+  users: (params) => request(`/api/admin/users?${new URLSearchParams(params || {})}`),
+  userDetail: (id) => request(`/api/admin/users/${id}`),
+  deleteUser: (id) => request(`/api/admin/users/${id}`, { method: 'DELETE' }),
+  broadcastNotification: (body) => request('/api/admin/notifications/broadcast', { method: 'POST', body: JSON.stringify(body) }),
 };
