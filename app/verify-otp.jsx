@@ -16,16 +16,26 @@ export default function VerifyOTP() {
 
   function handleChange(text, index) {
     const digit = text.replace(/[^0-9]/g, '');
-    if (!digit) return;
     const newOtp = [...otp];
+    if (!digit) {
+      newOtp[index] = '';
+      setOtp(newOtp);
+      if (index > 0) inputs.current[index - 1]?.focus();
+      return;
+    }
     newOtp[index] = digit;
     setOtp(newOtp);
     if (index < 5) inputs.current[index + 1]?.focus();
   }
 
   function handleKeyPress(e, index) {
-    if (e.nativeEvent.key === 'Backspace' && !otp[index] && index > 0) {
-      inputs.current[index - 1]?.focus();
+    if (e.nativeEvent.key === 'Backspace') {
+      if (otp[index]) {
+        const newOtp = [...otp];
+        newOtp[index] = '';
+        setOtp(newOtp);
+      }
+      if (index > 0) inputs.current[index - 1]?.focus();
     }
   }
 
