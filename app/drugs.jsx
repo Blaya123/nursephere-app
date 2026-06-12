@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, FlatList, ActivityIndicator, ScrollView } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { drugsApi } from '../services/api';
@@ -18,8 +18,8 @@ export default function Drugs() {
   async function loadDrugs(q = '') {
     setLoading(true);
     try {
-      const data = await drugsApi.getAll(q);
-      setDrugs(data);
+      const res = await drugsApi.getAll(q);
+      setDrugs(Array.isArray(res) ? res : (res.data || []));
     } catch { setDrugs([]); } finally { setLoading(false); }
   }
 
@@ -46,6 +46,7 @@ export default function Drugs() {
         <DetailSection theme={theme} title="Routes" items={drug.routes} />
         <DetailSection theme={theme} title="Indications" items={drug.indications} />
         <DetailSection theme={theme} title="Side Effects" items={drug.sideEffects} color={theme.error} />
+        <DetailSection theme={theme} title="Contraindications" items={drug.contraindications} color="#EF4444" />
         <DetailSection theme={theme} title="Nursing Considerations" items={drug.nursingConsiderations} color={theme.warning} />
       </View>
     );
@@ -69,7 +70,9 @@ export default function Drugs() {
       </View>
 
       {selected ? (
-        <DrugDetail drug={selected} />
+        <ScrollView contentContainerStyle={styles.detailScroll} showsVerticalScrollIndicator={false}>
+          <DrugDetail drug={selected} />
+        </ScrollView>
       ) : loading ? (
         <View style={styles.loadingContainer}><ActivityIndicator size="large" color={theme.primary} /></View>
       ) : (
@@ -114,6 +117,7 @@ const styles = StyleSheet.create({
   drugInfo: { flex: 1 },
   drugName: { fontSize: 16, fontWeight: '600' },
   drugGeneric: { fontSize: 12, marginTop: 2 },
+  detailScroll: { paddingBottom: 40 },
   detailCard: { margin: 16, borderRadius: 16, padding: 20 },
   backToResults: { flexDirection: 'row', alignItems: 'center', gap: 4, marginBottom: 12 },
   backText: { fontSize: 14, fontWeight: '500' },

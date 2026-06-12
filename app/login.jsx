@@ -23,15 +23,15 @@ export default function Login() {
       const data = await auth.login({ email, password });
       await setToken(data.token);
       await setStoredUser(data.user);
-      router.replace('/(tabs)');
+      if (data.user?.role === 'admin') {
+        router.replace('/admin-dashboard');
+      } else {
+        router.replace('/(tabs)');
+      }
     } catch (err) {
       if (err.message?.includes('needsOTP') || err.message?.includes('verify your email')) {
-        const otpRes = await auth.sendOTP({ email }).catch(() => null);
-        const otp = otpRes?.otp || '';
-        if (otpRes?.emailError) {
-          Alert.alert('Dev Mode', `OTP: ${otp}`);
-        }
-        router.push({ pathname: '/verify-otp', params: { email, loginFlow: 'true', devOtp: otp } });
+        await auth.sendOTP({ email }).catch(() => null);
+        router.push({ pathname: '/verify-otp', params: { email, loginFlow: 'true' } });
       } else {
         Alert.alert('Login Failed', err.message);
       }

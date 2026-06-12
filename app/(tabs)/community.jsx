@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, Keyboard, Platform, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, Keyboard, Platform, ActivityIndicator, Alert } from 'react-native';
+import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Channels } from '../../constants/theme';
 import { chatApi, getStoredUser } from '../../services/api';
@@ -53,6 +54,11 @@ export default function Community() {
     try {
       await chatApi.sendMessage(msgData);
     } catch {}
+  }
+
+  function goToUserProfile(item) {
+    if (!item.userId || item.userId.startsWith('seed')) return;
+    router.push({ pathname: '/user-profile', params: { userId: item.userId } });
   }
 
   function formatTime(dateStr) {
@@ -110,7 +116,7 @@ export default function Community() {
           keyboardShouldPersistTaps="handled"
           renderItem={({ item }) => (
             <View style={styles.messageContainer}>
-              <View style={styles.messageHeader}>
+              <TouchableOpacity style={styles.messageHeader} onPress={() => goToUserProfile(item)} activeOpacity={0.6}>
                 <View style={[styles.msgAvatar, { backgroundColor: theme.primary + '20' }]}>
                   <Text style={[styles.avatarText, { color: theme.primary }]}>{item.userName?.charAt(0) || '?'}</Text>
                 </View>
@@ -118,7 +124,7 @@ export default function Community() {
                   <Text style={[styles.msgName, { color: theme.text }]}>{item.userName}</Text>
                   <Text style={[styles.msgTime, { color: theme.textLight }]}>{formatTime(item.createdAt)}</Text>
                 </View>
-              </View>
+              </TouchableOpacity>
               <Text style={[styles.msgText, { color: theme.text }]}>{item.text}</Text>
               <View style={styles.reactionsRow}>
                 {REACTIONS.map(emoji => {

@@ -7,15 +7,26 @@ import { auth } from '../services/api';
 
 const Container = Platform.OS === 'ios' ? KeyboardAvoidingView : View;
 
+const programmeOptions = [
+  { value: 'BNSc Student', label: 'BNSc Nursing (4 yrs)' },
+  { value: 'Diploma Nursing Student', label: 'Diploma Nursing (3 yrs)' },
+  { value: 'Midwifery Student', label: 'Midwifery (RM)' },
+  { value: 'Community Nursing Student', label: 'Community Nursing (CHEW)' },
+  { value: 'Post-Basic Student', label: 'Post-Basic Nursing' },
+];
+
+const maxYears = { 'BNSc Student': 4, 'Diploma Nursing Student': 3, 'Midwifery Student': 3, 'Community Nursing Student': 3, 'Post-Basic Student': 1 };
+
 export default function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('BNSc Student');
   const [year, setYear] = useState('1');
   const [institution, setInstitution] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const years = ['1', '2', '3', '4'];
+  const years = Array.from({ length: maxYears[role] || 4 }, (_, i) => String(i + 1));
 
   async function handleRegister() {
     if (!name || !email || !password) {
@@ -25,7 +36,7 @@ export default function Register() {
     setLoading(true);
     try {
       const data = await auth.sendOTP({ email });
-      router.push({ pathname: '/verify-otp', params: { name, email, password, year, institution, devOtp: data.otp || '' } });
+      router.push({ pathname: '/verify-otp', params: { name, email, password, role, year, institution } });
     } catch (err) {
       Alert.alert('Error', err.message);
     } finally {
@@ -66,7 +77,18 @@ export default function Register() {
             </View>
 
             <View style={styles.yearContainer}>
-              <Text style={styles.yearLabel}>Level of Study</Text>
+              <Text style={styles.yearLabel}>Nursing Programme</Text>
+              <View style={styles.programmeRow}>
+                {programmeOptions.map((p) => (
+                  <TouchableOpacity key={p.value} style={[styles.programmeBtn, role === p.value && styles.programmeBtnActive]} onPress={() => { setRole(p.value); setYear('1'); }}>
+                    <Text style={[styles.programmeBtnText, role === p.value && styles.programmeBtnTextActive]}>{p.label}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+
+            <View style={styles.yearContainer}>
+              <Text style={styles.yearLabel}>Year of Study</Text>
               <View style={styles.yearRow}>
                 {years.map((y) => (
                   <TouchableOpacity key={y} style={[styles.yearBtn, year === y && styles.yearBtnActive]} onPress={() => setYear(y)}>
@@ -101,6 +123,11 @@ const styles = StyleSheet.create({
   input: { flex: 1, color: '#fff', fontSize: 16 },
   yearContainer: { marginTop: 4 },
   yearLabel: { color: 'rgba(255,255,255,0.7)', fontSize: 13, marginBottom: 8 },
+  programmeRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
+  programmeBtn: { backgroundColor: 'rgba(255,255,255,0.12)', borderRadius: 10, paddingVertical: 10, paddingHorizontal: 10, alignItems: 'center', minWidth: '30%', flex: 1 },
+  programmeBtnActive: { backgroundColor: '#fff' },
+  programmeBtnText: { color: 'rgba(255,255,255,0.7)', fontSize: 11, fontWeight: '600', textAlign: 'center' },
+  programmeBtnTextActive: { color: '#008751' },
   yearRow: { flexDirection: 'row', gap: 8 },
   yearBtn: { flex: 1, backgroundColor: 'rgba(255,255,255,0.12)', borderRadius: 12, paddingVertical: 12, alignItems: 'center' },
   yearBtnActive: { backgroundColor: '#fff' },

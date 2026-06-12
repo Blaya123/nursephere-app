@@ -1,0 +1,54 @@
+Starting project at C:\Users\iTECH\Desktop\NRSP\app
+Starting Metro Bundler
+
+ WARN  Failed to download the latest version of React Native DevTools. Using a fallback version instead. Connect to the internet or check your network settings.
+Tunnel connected.
+Tunnel ready.
+Waiting on http://localhost:8081
+Logs for your project will appear below.
+Android Bundled 1908ms index.js (1488 modules)
+Android Bundled 2306ms node_modules\expo-router\entry.js (1445 modules)
+Android Bundled 93ms node_modules\expo-router\entry.js (1 module)
+ WARN  Route "./context/ActiveTimerContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+ WARN  Route "./context/NotificationContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+ WARN  Route "./context/SocketContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+ WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+Android Bundled 2036ms node_modules\expo-router\entry.js (1 module)
+Tunnel connection has been closed. This is often related to intermittent connection issues between the dev server and ngrok. Restart the dev server to try connecting to ngrok again.
+Check the Ngrok status page for outages: https://status.ngrok.com/
+Tunnel connected.
+Android Bundled 116ms node_modules\expo-router\entry.js (1 module)
+Android Bundled 131ms node_modules\expo-router\entry.js (1 module)
+ WARN  Route "./context/ActiveTimerContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+ WARN  Route "./context/NotificationContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+ WARN  Route "./context/SocketContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+ WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+ ERROR  [ReferenceError: Property 'useColorScheme' doesn't exist] 
+
+Code: ThemeContext.jsx
+[0m [90m  8 |[39m
+ [90m  9 |[39m [36mexport[39m [36mfunction[39m [33mThemeProvider[39m({ children }) {
+[31m[1m>[22m[39m[90m 10 |[39m   [36mconst[39m systemScheme [33m=[39m useColorScheme()[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m
+ [90m 11 |[39m   [36mconst[39m [storedTheme[33m,[39m setStoredTheme] [33m=[39m useState([36mnull[39m)[33m;[39m
+ [90m 12 |[39m   [36mconst[39m [ready[33m,[39m setReady] [33m=[39m useState([36mfalse[39m)[33m;[39m
+ [90m 13 |[39m[0m
+Call Stack
+  ThemeProvider (app\context\ThemeContext.jsx:10:24) 
+
+Code: _layout.jsx
+[0m [90m 38 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mRootLayout[39m() {
+ [90m 39 |[39m   [36mreturn[39m (
+[31m[1m>[22m[39m[90m 40 |[39m     [33m<[39m[33mThemeProvider[39m[33m>[39m
+ [90m    |[39m     [31m[1m^[22m[39m
+ [90m 41 |[39m       [33m<[39m[33mActiveTimerProvider[39m[33m>[39m
+ [90m 42 |[39m         [33m<[39m[33mNotificationProvider[39m[33m>[39m
+ [90m 43 |[39m           [33m<[39m[33mSocketProvider[39m[33m>[39m[0m
+Call Stack
+  RootLayout (app\_layout.jsx:40:5)
+Android Bundled 1020ms index.js (1 module)
+ WARN  Route "./context/ActiveTimerContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+ WARN  Route "./context/NotificationContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+ WARN  Route "./context/SocketContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+ WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+Android Bundled 149ms index.js (1 module)

@@ -9,10 +9,9 @@ import { auth, setToken, setStoredUser } from '../services/api';
 const Container = Platform.OS === 'ios' ? KeyboardAvoidingView : View;
 
 export default function VerifyOTP() {
-  const { name, email, password, year, institution, devOtp: initialDevOtp, loginFlow } = useLocalSearchParams();
+  const { name, email, password, role, year, institution, loginFlow } = useLocalSearchParams();
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [loading, setLoading] = useState(false);
-  const [devOtp, setDevOtp] = useState(initialDevOtp || '');
   const inputs = useRef([]);
 
   function handleChange(text, index) {
@@ -40,7 +39,7 @@ export default function VerifyOTP() {
     try {
       const data = loginFlow === 'true'
         ? await auth.verifyOTP({ email, otp: code })
-        : await auth.register({ name, email, password, otp: code, year, institution });
+        : await auth.register({ name, email, password, otp: code, role, year, institution });
       await setToken(data.token);
       await setStoredUser(data.user);
       router.replace('/(tabs)');
@@ -53,9 +52,8 @@ export default function VerifyOTP() {
 
   async function handleResend() {
     try {
-      const data = await auth.resendOTP({ email });
-      if (data.otp) { setDevOtp(data.otp); setOtp(data.otp.split('')); }
-      Alert.alert('OTP Resent', data.otp ? 'Dev OTP shown on screen' : 'Check your email');
+      await auth.resendOTP({ email });
+      Alert.alert('OTP Resent', 'Check your email for the verification code');
     } catch (err) {
       Alert.alert('Error', err.message);
     }
@@ -71,10 +69,6 @@ export default function VerifyOTP() {
         <Ionicons name="mail-unread" size={48} color="#4ADE80" style={{ marginBottom: 16 }} />
         <Text style={styles.title}>Verify Email</Text>
         <Text style={styles.subtitle}>Enter the 6-digit code sent to{'\n'}{email}</Text>
-
-        {devOtp ? (
-          <Text style={styles.devHint}>Dev Mode — OTP: {devOtp}</Text>
-        ) : null}
 
         <View style={styles.otpRow}>
           {otp.map((digit, i) => (
@@ -116,6 +110,5 @@ const styles = StyleSheet.create({
   button: { backgroundColor: '#fff', paddingVertical: 16, borderRadius: 16, alignItems: 'center', width: '100%' },
   buttonText: { color: '#008751', fontSize: 18, fontWeight: '700' },
   link: { color: 'rgba(255,255,255,0.8)', fontSize: 14, fontWeight: '600' },
-  devHint: { color: '#FBBF24', fontSize: 14, fontWeight: '600', marginBottom: 16, textAlign: 'center' },
 });
 
