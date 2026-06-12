@@ -1,5 +1,4 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { useColorScheme } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DarkColors, Colors } from '../../constants/theme';
 
@@ -19,7 +18,7 @@ export function ThemeProvider({ children }) {
     });
   }, []);
 
-  const isDark = ready ? (storedTheme ? storedTheme === 'dark' : systemScheme === 'dark') : systemScheme === 'dark';
+  const isDark = ready ? storedTheme === 'dark' : false;
   const theme = isDark ? DarkColors : Colors;
 
   const toggleDarkMode = useCallback(async (value) => {
