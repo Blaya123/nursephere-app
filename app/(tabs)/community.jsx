@@ -1,13 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, Keyboard, Platform, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Channels } from '../../constants/theme';
 import { chatApi, getStoredUser } from '../../services/api';
 import { useTheme } from '../context/ThemeContext';
 
 const REACTIONS = ['👍', '❤️', '🔥', '😂', '🙏', '💪'];
-
-const Container = Platform.OS === 'ios' ? KeyboardAvoidingView : View;
 
 export default function Community() {
   const { isDark, theme } = useTheme();
@@ -18,7 +16,14 @@ export default function Community() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showChannels, setShowChannels] = useState(false);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
   const flatListRef = useRef(null);
+
+  useEffect(() => {
+    const show = Keyboard.addListener('keyboardDidShow', (e) => setKeyboardHeight(e.endCoordinates.height));
+    const hide = Keyboard.addListener('keyboardDidHide', () => setKeyboardHeight(0));
+    return () => { show.remove(); hide.remove(); };
+  }, []);
 
   useEffect(() => {
     getStoredUser().then(setUser);
@@ -61,7 +66,7 @@ export default function Community() {
   }
 
   return (
-    <Container style={[styles.container, { backgroundColor: theme.background }]} behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
       <View style={[styles.header, { backgroundColor: theme.surface, borderBottomColor: theme.border }]}>
         <TouchableOpacity style={styles.headerLeft} onPress={() => setShowChannels(!showChannels)}>
           <Text style={[styles.channelIcon]}>{getChannelIcon(activeChannel)}</Text>
@@ -131,13 +136,13 @@ export default function Community() {
         />
       )}
 
-      <View style={[styles.inputBar, { backgroundColor: theme.surface, borderTopColor: theme.border }]}>
+      <View style={[styles.inputBar, { backgroundColor: theme.surface, borderTopColor: theme.border, paddingBottom: Platform.OS === 'android' ? keyboardHeight + 8 : 8 }]}>
         <TextInput style={[styles.input, { backgroundColor: theme.surfaceAlt, color: theme.text }]} placeholder="Type a message..." placeholderTextColor={theme.textLight} value={input} onChangeText={setInput} multiline maxLength={500} />
         <TouchableOpacity style={[styles.sendButton, { backgroundColor: theme.primary }]} onPress={sendMessage} disabled={!input.trim()}>
           <Ionicons name="send" size={18} color="#fff" />
         </TouchableOpacity>
       </View>
-    </Container>
+    </View>
   );
 }
 

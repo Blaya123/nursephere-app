@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, FlatList, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
+import { useState, useRef, useEffect } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, FlatList, Keyboard, Platform, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { aiApi } from '../services/api';
@@ -12,8 +12,6 @@ const SUGGESTIONS = [
   'How to calculate IV drip rate?',
 ];
 
-const Container = Platform.OS === 'ios' ? KeyboardAvoidingView : View;
-
 export default function AIAssistant() {
   const { isDark, theme } = useTheme();
 
@@ -22,7 +20,14 @@ export default function AIAssistant() {
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
   const flatListRef = useRef(null);
+
+  useEffect(() => {
+    const show = Keyboard.addListener('keyboardDidShow', (e) => setKeyboardHeight(e.endCoordinates.height));
+    const hide = Keyboard.addListener('keyboardDidHide', () => setKeyboardHeight(0));
+    return () => { show.remove(); hide.remove(); };
+  }, []);
 
   async function sendMessage() {
     if (!input.trim() || loading) return;
@@ -44,7 +49,7 @@ export default function AIAssistant() {
   }
 
   return (
-    <Container style={[styles.container, { backgroundColor: theme.background }]} behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
       <View style={[styles.header, { backgroundColor: theme.surface, borderBottomColor: theme.border }]}>
         <View style={styles.headerLeft}>
           <View style={[styles.aiIcon, { backgroundColor: theme.primary + '20' }]}>
@@ -96,7 +101,7 @@ export default function AIAssistant() {
         </View>
       )}
 
-      <View style={[styles.inputBar, { backgroundColor: theme.surface, borderTopColor: theme.border }]}>
+      <View style={[styles.inputBar, { backgroundColor: theme.surface, borderTopColor: theme.border, paddingBottom: Platform.OS === 'android' ? keyboardHeight + 8 : 8 }]}>
         <TextInput
           style={[styles.input, { backgroundColor: theme.surfaceAlt, color: theme.text, borderColor: theme.border }]}
           placeholder="Ask anything about nursing..."
@@ -110,7 +115,7 @@ export default function AIAssistant() {
           <Ionicons name="send" size={18} color="#fff" />
         </TouchableOpacity>
       </View>
-    </Container>
+    </View>
   );
 }
 
