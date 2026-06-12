@@ -1,5 +1,5 @@
 import { useEffect, useRef, useCallback } from 'react';
-import { View, Text, StyleSheet, Animated, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Animated, Dimensions, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router, useFocusEffect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -42,11 +42,9 @@ export default function Welcome() {
   return (
     <LinearGradient colors={['#008751', '#004D2E', '#002814']} style={styles.container}>
       <Animated.View style={[styles.content, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
-        <Animated.View style={{ transform: [{ scale: pulseAnim }] }}>
-          <View style={styles.iconContainer}>
-            <Ionicons name="medical" size={60} color="#fff" />
-          </View>
-        </Animated.View>
+          <Animated.View style={{ transform: [{ scale: pulseAnim }] }}>
+            <Image source={require('../assets/app-icon.jpeg')} style={styles.logo} />
+          </Animated.View>
 
         <Text style={styles.title}>NURSPHERE</Text>
         <Text style={styles.subtitle}>AI-Powered Nursing Platform</Text>
@@ -83,6 +81,7 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   content: { flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 32 },
   iconContainer: { width: 120, height: 120, borderRadius: 60, backgroundColor: 'rgba(255,255,255,0.15)', justifyContent: 'center', alignItems: 'center', marginBottom: 24 },
+  logo: { width: 120, height: 120, borderRadius: 60, marginBottom: 24 },
   title: { fontSize: 42, fontWeight: '900', color: '#fff', letterSpacing: 4, marginBottom: 8 },
   subtitle: { fontSize: 16, color: '#4ADE80', fontWeight: '600', marginBottom: 8 },
   tagline: { fontSize: 14, color: 'rgba(255,255,255,0.7)', textAlign: 'center', marginBottom: 40 },
