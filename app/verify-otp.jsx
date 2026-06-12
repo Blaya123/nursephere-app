@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { auth, setToken, setStoredUser } from '../services/api';
 
 export default function VerifyOTP() {
-  const { name, email, password, year, institution, devOtp: initialDevOtp } = useLocalSearchParams();
+  const { name, email, password, year, institution, devOtp: initialDevOtp, loginFlow } = useLocalSearchParams();
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [loading, setLoading] = useState(false);
   const [devOtp, setDevOtp] = useState(initialDevOtp || '');
@@ -35,7 +35,9 @@ export default function VerifyOTP() {
     }
     setLoading(true);
     try {
-      const data = await auth.register({ name, email, password, otp: code, year, institution });
+      const data = loginFlow === 'true'
+        ? await auth.verifyOTP({ email, otp: code })
+        : await auth.register({ name, email, password, otp: code, year, institution });
       await setToken(data.token);
       await setStoredUser(data.user);
       router.replace('/(tabs)');

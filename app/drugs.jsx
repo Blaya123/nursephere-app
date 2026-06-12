@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-;
 import { drugsApi } from '../services/api';
 import { useTheme } from './context/ThemeContext';
 

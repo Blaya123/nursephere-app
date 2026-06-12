@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-;
 import { aiApi } from '../services/api';
 import { useTheme } from './context/ThemeContext';
 

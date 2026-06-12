@@ -25,15 +25,12 @@ export default function Login() {
       router.replace('/(tabs)');
     } catch (err) {
       if (err.message?.includes('needsOTP') || err.message?.includes('verify your email')) {
-        Alert.alert('Email Not Verified', 'Please verify your email first. A new OTP will be sent.', [
-          { text: 'Send OTP', onPress: async () => {
-            try {
-              await auth.sendOTP({ email });
-              router.push({ pathname: '/verify-otp', params: { email } });
-            } catch {}
-          }},
-          { text: 'Cancel', style: 'cancel' },
-        ]);
+        const otpRes = await auth.sendOTP({ email }).catch(() => null);
+        const otp = otpRes?.otp || '';
+        if (otpRes?.emailError) {
+          Alert.alert('Dev Mode', `OTP: ${otp}`);
+        }
+        router.push({ pathname: '/verify-otp', params: { email, loginFlow: 'true', devOtp: otp } });
       } else {
         Alert.alert('Login Failed', err.message);
       }

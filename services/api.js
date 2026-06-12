@@ -56,6 +56,7 @@ async function request(endpoint, options = {}) {
 export const auth = {
   sendOTP: (body) => request('/api/auth/send-otp', { method: 'POST', body: JSON.stringify(body) }),
   register: (body) => request('/api/auth/register', { method: 'POST', body: JSON.stringify(body) }),
+  verifyOTP: (body) => request('/api/auth/verify-otp', { method: 'POST', body: JSON.stringify(body) }),
   resendOTP: (body) => request('/api/auth/resend-otp', { method: 'POST', body: JSON.stringify(body) }),
   login: (body) => request('/api/auth/login', { method: 'POST', body: JSON.stringify(body) }),
   forgotPassword: (body) => request('/api/auth/forgot-password', { method: 'POST', body: JSON.stringify(body) }),

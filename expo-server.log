@@ -290,3 +290,13 @@ Android Bundled 367ms node_modules\expo-router\entry.js (1 module)
  WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
 Android Bundled 1488ms node_modules\expo-router\entry.js (1 module)
  WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+Android Bundled 500ms node_modules\expo-router\entry.js (1 module)
+ WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+Android Bundled 94ms node_modules\expo-router\entry.js (1 module)
+ WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+Android Bundled 80ms node_modules\expo-router\entry.js (1 module)
+ WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+Android Bundled 169ms node_modules\expo-router\entry.js (1 module)
+ WARN  Route "./context/ThemeContext.jsx" is missing the required default export. Ensure a React component is exported as default.
+
+C:\Users\iTECH\Desktop\NRSP\app>
