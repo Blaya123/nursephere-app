@@ -7,7 +7,6 @@ const ThemeContext = createContext();
 const THEME_KEY = 'nursphere_theme';
 
 export function ThemeProvider({ children }) {
-  const systemScheme = useColorScheme();
   const [storedTheme, setStoredTheme] = useState(null);
   const [ready, setReady] = useState(false);
 
