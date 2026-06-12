@@ -42,7 +42,7 @@ export default function AIAssistant() {
   }
 
   return (
-    <KeyboardAvoidingView style={[styles.container, { backgroundColor: theme.background }]} behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={90}>
+    <KeyboardAvoidingView style={[styles.container, { backgroundColor: theme.background }]} behavior={Platform.OS === 'ios' ? 'padding' : 'padding'} keyboardVerticalOffset={Platform.OS === 'android' ? 0 : 90}>
       <View style={[styles.header, { backgroundColor: theme.surface, borderBottomColor: theme.border }]}>
         <View style={styles.headerLeft}>
           <View style={[styles.aiIcon, { backgroundColor: theme.primary + '20' }]}>
@@ -60,6 +60,7 @@ export default function AIAssistant() {
         data={messages}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.messagesList}
+        keyboardShouldPersistTaps="handled"
         onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
         ListHeaderComponent={() => !loading && messages.length === 1 ? (
           <View style={styles.suggestions}>

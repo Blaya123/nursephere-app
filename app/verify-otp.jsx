@@ -60,7 +60,7 @@ export default function VerifyOTP() {
 
   return (
     <LinearGradient colors={['#008751', '#004D2E']} style={styles.container}>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.content}>
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'padding'} keyboardVerticalOffset={Platform.OS === 'android' ? 0 : 90} style={styles.content}>
         <TouchableOpacity onPress={() => router.back()} style={styles.back}>
           <Ionicons name="arrow-back" size={24} color="#fff" />
         </TouchableOpacity>

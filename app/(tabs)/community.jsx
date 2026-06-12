@@ -59,7 +59,7 @@ export default function Community() {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
+    <KeyboardAvoidingView style={[styles.container, { backgroundColor: theme.background }]} behavior={Platform.OS === 'ios' ? 'padding' : 'padding'} keyboardVerticalOffset={Platform.OS === 'android' ? 0 : 90}>
       <View style={[styles.header, { backgroundColor: theme.surface, borderBottomColor: theme.border }]}>
         <TouchableOpacity style={styles.headerLeft} onPress={() => setShowChannels(!showChannels)}>
           <Text style={[styles.channelIcon]}>{getChannelIcon(activeChannel)}</Text>
@@ -99,6 +99,7 @@ export default function Community() {
           keyExtractor={(item) => item._id}
           contentContainerStyle={styles.messagesList}
           onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
+          keyboardShouldPersistTaps="handled"
           renderItem={({ item }) => (
             <View style={styles.messageContainer}>
               <View style={styles.messageHeader}>
@@ -127,15 +128,13 @@ export default function Community() {
         />
       )}
 
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={90}>
-        <View style={[styles.inputBar, { backgroundColor: theme.surface, borderTopColor: theme.border }]}>
-          <TextInput style={[styles.input, { backgroundColor: theme.surfaceAlt, color: theme.text }]} placeholder="Type a message..." placeholderTextColor={theme.textLight} value={input} onChangeText={setInput} multiline maxLength={500} />
-          <TouchableOpacity style={[styles.sendButton, { backgroundColor: theme.primary }]} onPress={sendMessage} disabled={!input.trim()}>
-            <Ionicons name="send" size={18} color="#fff" />
-          </TouchableOpacity>
-        </View>
-      </KeyboardAvoidingView>
-    </View>
+      <View style={[styles.inputBar, { backgroundColor: theme.surface, borderTopColor: theme.border }]}>
+        <TextInput style={[styles.input, { backgroundColor: theme.surfaceAlt, color: theme.text }]} placeholder="Type a message..." placeholderTextColor={theme.textLight} value={input} onChangeText={setInput} multiline maxLength={500} />
+        <TouchableOpacity style={[styles.sendButton, { backgroundColor: theme.primary }]} onPress={sendMessage} disabled={!input.trim()}>
+          <Ionicons name="send" size={18} color="#fff" />
+        </TouchableOpacity>
+      </View>
+    </KeyboardAvoidingView>
   );
 }
 
