@@ -86,7 +86,7 @@ export default function Dashboard() {
               { value: stats.questionsAnswered, label: 'Questions', icon: 'checkbox-outline' },
               { value: stats.connectionsCount, label: 'Connections', icon: 'people-outline' },
             ].map((s, i) => (
-              <FadeSlideIn key={i} delay={i * 100}>
+              <FadeSlideIn key={i} delay={i * 100} style={{ flex: 1 }}>
                 <View style={styles.statCard}>
                   <Ionicons name={s.icon} size={16} color="#4ADE80" />
                   <Text style={styles.statValue}>{s.value}</Text>
@@ -139,7 +139,7 @@ export default function Dashboard() {
           <View style={styles.quickGrid}>
             {quickActions.map((action, i) => (
               <FadeSlideIn key={i} delay={i * 80} style={{ width: '47%' }}>
-                <TouchableOpacity style={[styles.quickCard, { backgroundColor: theme.surface }]} onPress={() => router.push(action.route)}>
+                <TouchableOpacity style={[styles.quickCard, { backgroundColor: theme.surface, width: '100%' }]} onPress={() => router.push(action.route)}>
                   <View style={[styles.quickIcon, { backgroundColor: action.color + '20' }]}>
                     <Ionicons name={action.icon} size={24} color={action.color} />
                   </View>
