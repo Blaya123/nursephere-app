@@ -56,7 +56,7 @@ export default function Profile() {
   const menuItems = [
     { icon: 'map-outline', label: 'Career Roadmap', route: '/roadmap', color: '#8B5CF6' },
     { icon: 'trophy-outline', label: `Achievements (${user?.achievements?.length || 0})`, route: '/roadmap', color: '#F59E0B' },
-    { icon: 'people-outline', label: `${stats.connectionsCount} Connections`, color: '#3B82F6' },
+    { icon: 'people-outline', label: `${stats.connectionsCount} Connections`, route: '/connections', color: '#3B82F6' },
   ];
 
   return (
